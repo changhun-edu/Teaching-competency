@@ -1,1 +1,1711 @@
 
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>우리 반 수업 성장 지도</title>
+<style>
+:root{
+  --navy:#1e3a5f;--navy2:#0f2541;--green:#16a34a;--orange:#ea580c;--blue:#2563eb;
+  --bg:#f8fafc;--card:#ffffff;--ink:#172033;--muted:#667085;--line:#d9e2ef;
+  --soft:#eef6ff;--ok:#ecfdf3;--warn:#fff7ed;--shadow:0 18px 45px rgba(15,37,65,.10);
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.62;word-break:keep-all}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* ── Hero ── */
+.hero{position:relative;overflow:hidden;background:radial-gradient(circle at 80% 12%,rgba(22,163,74,.23),transparent 28%),linear-gradient(135deg,var(--navy),var(--navy2));color:white;padding:60px 0 46px}
+.hero:after{content:"";position:absolute;right:-80px;bottom:-80px;width:310px;height:310px;border-radius:50%;background:rgba(255,255,255,.06)}
+.kicker{display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);border-radius:999px;padding:8px 13px;font-weight:800;font-size:14px}
+.heroGrid{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}
+.title{font-size:clamp(34px,5.5vw,64px);line-height:1.08;letter-spacing:-.06em;margin:18px 0 14px}
+.lead{font-size:19px;max-width:720px;opacity:.92;margin:0 0 20px}
+.checks{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.check{border-radius:999px;background:rgba(255,255,255,.12);padding:9px 13px;font-size:16px}
+.preview{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);border-radius:28px;padding:20px;box-shadow:0 20px 70px rgba(0,0,0,.18);backdrop-filter:blur(10px)}
+.preview .sample{background:white;color:var(--ink);border-radius:20px;padding:18px;margin-top:10px}
+.typeChips{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chip{background:#f2f7ff;border:1px solid #d8e6ff;border-radius:15px;padding:12px;font-weight:900;color:#24427d}
+/* ★ 만든이: 푸터로 이동, 최소화 */
+.sourceNote{margin:10px 0 0;padding:10px 14px;border-left:3px solid var(--line,#d6dce5);background:rgba(127,127,127,.06);border-radius:0 10px 10px 0;font-size:13.5px;line-height:1.6;color:var(--muted)}
+.siteFooter{text-align:center;padding:18px 0 28px;font-size:12px;color:var(--muted);opacity:.5;letter-spacing:-.01em}
+
+/* ── 히어로 이어하기 배너 ── */
+.heroResume{margin-top:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:18px;padding:14px 18px;display:none}
+.heroResume b{font-size:15px}
+.heroResume .heroResumeActions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.heroResume button{padding:9px 14px;font-size:14px;border-radius:12px}
+.heroResume button.ghost{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3)}
+.heroResume button.ghost:hover{background:rgba(255,255,255,.25)}
+
+/* ── 공통 ── */
+main{padding:28px 0 40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);padding:26px;margin:20px 0}
+.noShadow{box-shadow:none}
+h2{font-size:28px;letter-spacing:-.04em;margin:0 0 12px}
+h3{font-size:21px;letter-spacing:-.03em;margin:24px 0 10px}
+h4{font-size:17px;letter-spacing:-.02em;margin:16px 0 6px}
+p{margin:8px 0}.muted{color:var(--muted)}.small{font-size:16px}.tiny{font-size:14px;color:var(--muted)}
+button,.btn{border:0;border-radius:16px;padding:14px 19px;background:var(--navy);color:white;font-weight:900;cursor:pointer;font-size:17px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s}
+button:hover{opacity:.88}
+button.secondary{background:#eaf2ff;color:#1e3a5f}
+button.ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}
+button.danger{background:#fee2e2;color:#991b1b}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.dangerZone{margin-top:24px;padding-top:16px;border-top:1px dashed var(--line)}
+ul{margin:8px 0 0 18px;padding:0}li{margin:5px 0}
+.printTitle{display:none}
+
+/* ── 레이아웃 그리드 ── */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.mini{border:1px solid var(--line);background:#fbfdff;border-radius:20px;padding:17px}
+.mini .icon{font-size:26px;margin-bottom:6px}.mini b{color:var(--navy)}
+
+/* ── "요구하지 않는 것" 배지 ── */
+.notRequiredRow{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.notBadge{display:inline-flex;align-items:center;gap:6px;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:999px;padding:7px 13px;font-size:14px;color:#475569;font-weight:700}
+.notBadge::before{content:"✗";color:#94a3b8;font-size:12px}
+
+/* ── 교사 자연적 필요 카드 ── */
+.needsGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}
+.needCard{border:1px solid var(--line);border-radius:18px;background:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.needCard .needEmoji{font-size:22px;flex-shrink:0}
+.needCard .needText{flex:1}
+.needCard .needText b{display:block;font-size:15px;color:var(--ink)}
+.needCard .needTag{display:inline-flex;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:900;color:#fff;margin-top:4px}
+
+/* ── 변하는것/변하지않는것 ── */
+.changeGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.changeCol{border-radius:18px;padding:16px}
+.changeCol.changes{background:#fff1f2;border:1px solid #fecdd3}
+.changeCol.stays{background:#ecfdf3;border:1px solid #86efac}
+.changeCol h4{margin:0 0 10px;font-size:15px}
+.changeCol ul{margin:0 0 0 16px}
+.changeCol li{font-size:14px;margin:5px 0}
+
+/* ── 3단계 정의 카드 ── */
+.stageDefGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
+.stageDef{border-radius:20px;padding:18px;text-align:center}
+.stageDef.s1{background:#fff7ed;border:1px solid #fed7aa}
+.stageDef.s2{background:#eef6ff;border:1px solid #bfdbfe}
+.stageDef.s3{background:#ecfdf3;border:1px solid #86efac}
+.stageDef .sdNum{font-size:28px;font-weight:950;letter-spacing:-.05em}
+.stageDef .sdKo{font-size:17px;font-weight:900;margin:4px 0 2px}
+.stageDef .sdEn{font-size:12px;color:var(--muted);margin-bottom:8px}
+.stageDef .sdDesc{font-size:13px;line-height:1.5;color:#374151}
+
+/* ── 핵심가치 그룹 ── */
+.coreValueGroup{margin:16px 0}
+.coreValueLabel{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.coreValueLabel .cvNum{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;flex-shrink:0}
+.coreValueLabel .cvTitle{font-weight:900;font-size:16px}
+.coreValueLabel .cvSub{font-size:13px;color:var(--muted);margin-left:4px}
+.cvCards{display:grid;gap:8px}
+
+/* ── 영역 카드 (4열) ── */
+.competencyGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.compCard{border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#fff,#f8fbff);padding:14px;text-align:center}
+.compCard .emoji{font-size:24px}.compCard b{display:block;font-size:15px;margin-top:5px;word-break:keep-all}
+.compCard span{font-size:12px;color:var(--muted)}
+
+/* ── 단계별 진단 ── */
+.stepNav{display:flex;align-items:center;justify-content:space-between;margin:18px 0 0;gap:12px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.stepDots{display:flex;gap:6px;flex:1;justify-content:center}
+.stepDot{width:28px;height:8px;border-radius:999px;background:var(--line);transition:.2s}
+.stepDot.done{background:var(--green)}.stepDot.active{background:var(--navy);width:40px}
+.domainStep{display:none}
+.domainStep.active{display:block;padding-top:24px}
+/* ── 영역 헤더 카드 ── */
+.domainHeader{background:linear-gradient(135deg,#f8fafc,#eef6ff);border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin-bottom:16px}
+.domainBadge{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.domainBadge .tag{flex-shrink:0}
+.domainBadge .domainName{font-size:19px;font-weight:900;color:var(--ink);letter-spacing:-.03em}
+.domainCoreValue{font-size:13px;color:var(--muted);margin-top:2px}
+.domainDesc{font-size:15px;color:var(--muted);line-height:1.6;margin-top:8px;padding-top:10px;border-top:1px solid var(--line)}
+.tag{min-width:42px;border-radius:14px;padding:7px 10px;color:#fff;font-weight:900;text-align:center;font-size:15px;flex-shrink:0}
+.A{background:#2563eb}.B{background:#7c3aed}.C{background:#f59e0b}.D{background:#fb923c}
+.E{background:#ea580c}.F{background:#ca8a04}.G{background:#16a34a}
+
+/* ── 하단 네비게이션 ── */
+.bottomNav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px;padding-top:20px;border-top:2px solid var(--line)}
+.bottomNavNext{flex:1;max-width:420px;margin-left:auto}
+.bottomNavNext button{width:100%;justify-content:center;border-radius:18px;padding:16px 20px;font-size:17px;transition:background .2s,box-shadow .2s}
+.bottomNavNext button.allDone{background:var(--green);box-shadow:0 6px 20px rgba(22,163,74,.35)}
+.bottomNavNext button.allDone:hover{opacity:.93}
+/* 완료 토스트 */
+.completionToast{display:none;align-items:center;gap:10px;background:#ecfdf3;border:1px solid #86efac;border-radius:16px;padding:12px 16px;margin-top:14px;animation:fadeSlide .3s ease}
+.completionToast.show{display:flex}
+.completionToast .toastIcon{font-size:22px;flex-shrink:0}
+.completionToast .toastText{flex:1;font-size:15px;font-weight:700;color:#166534}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── 영역 문항 요약 박스 ── */
+.indBox{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0 16px}
+.indBox .indTitle{font-size:13px;font-weight:900;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.03em}
+.indItem{display:flex;gap:8px;align-items:flex-start;margin:6px 0;font-size:14px}
+.indItem .indCode{font-weight:900;color:var(--navy);flex-shrink:0;min-width:28px}
+
+/* ── 진행 ── */
+.progressWrap{margin-bottom:6px}
+.progressMeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.progress{height:10px;background:#e9eefb;border-radius:999px;overflow:hidden}
+.bar{height:100%;width:0;background:linear-gradient(90deg,var(--navy),var(--green));transition:.3s}
+
+/* ── 척도 ── */
+.scaleWrap{margin-top:10px}
+.scaleLabels{display:flex;justify-content:space-between;margin-bottom:5px;font-size:13px;color:var(--muted)}
+.scale{display:grid;grid-template-columns:1fr;gap:8px}
+.scale label{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--line);border-radius:14px;padding:13px 15px;text-align:left;cursor:pointer;background:#fbfdff;font-size:15px;font-weight:600;line-height:1.55;transition:.15s;user-select:none}
+.scale label:hover{border-color:#93b4e8;background:#f0f6ff}
+.scale input{display:none}
+.scale .optMark{flex-shrink:0;font-weight:900;font-size:16px;color:var(--navy);transition:.15s}
+.scale label:has(input:checked){background:var(--navy);color:white;border-color:var(--navy);font-weight:700}
+.scale label:has(input:checked) .optMark{color:#fff}
+.q{padding:18px 0;border-top:1px solid var(--line)}
+.q:first-child{border-top:0;padding-top:0}
+.qtitle{font-weight:900;font-size:17px;line-height:1.5}
+.qhint{font-size:15px;color:var(--muted);margin:4px 0 10px}
+
+/* ── 결과 ── */
+.result{display:none}
+.resultSummaryCard{background:linear-gradient(135deg,#f0fdf4,#eef6ff);border:1px solid #bdebd2;border-radius:28px;padding:28px;margin-bottom:20px}
+.resultSummaryCard .typeName{font-size:30px;font-weight:950;letter-spacing:-.04em;margin:6px 0 4px}
+.overallScore{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:15px;font-weight:700;margin-bottom:10px}
+.summaryGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.summaryItem{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px}
+.summaryItem .label{font-size:13px;color:var(--muted);margin-bottom:4px}
+.summaryItem .val{font-size:17px;font-weight:900;color:var(--navy)}
+.missionHighlight{background:#fff7ed;border:2px solid #fed7aa;border-radius:24px;padding:22px;margin-bottom:20px}
+.missionHighlight h3{margin:0 0 4px;font-size:19px}
+.missionAllDone{display:none;margin-top:16px;background:#ecfdf3;border:1px solid #86efac;border-radius:16px;padding:14px;text-align:center}
+.resultAccordion{border:1px solid var(--line);border-radius:24px;overflow:hidden;margin:16px 0;background:#fff}
+.resultAccSection{border-top:1px solid var(--line)}
+.resultAccSection:first-child{border-top:0}
+.resultAccBtn{width:100%;background:#fff;color:var(--ink);border-radius:0;justify-content:space-between;padding:16px 20px;font-size:16px}
+.resultAccBtn .arrow{transition:.2s;font-style:normal}
+.resultAccSection.open .resultAccBtn .arrow{transform:rotate(180deg)}
+.resultAccBody{display:none;padding:4px 20px 20px}
+.resultAccSection.open .resultAccBody{display:block}
+.pill{display:inline-flex;border-radius:999px;padding:5px 10px;font-size:13px;font-weight:900;margin:3px}
+.stage0{background:#fff1f2;color:#991b1b}.stage1{background:#fff7ed;color:#9a3412}
+.stage2{background:#eef6ff;color:#1e3a5f}.stage3{background:#ecfdf3;color:#166534}
+.stageBadgeRow{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px}
+.radarWrap{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:center;border:1px solid var(--line);background:#fbfdff;border-radius:26px;padding:18px}
+.radarBox{background:#fff;border:1px solid var(--line);border-radius:24px;padding:12px}
+.radarBox canvas{width:100%;max-width:560px;height:auto;display:block;margin:0 auto}
+.radarLegend{display:grid;gap:9px}
+.radarItem{display:grid;grid-template-columns:1fr 58px 90px;gap:10px;align-items:center;border:1px solid var(--line);background:#fff;border-radius:16px;padding:10px 12px}
+.radarItem b{color:var(--navy)}
+.priority{border:1px solid #fed7aa;background:#fff7ed;border-radius:24px;padding:20px}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.step{border:1px solid var(--line);background:#fff;border-radius:18px;padding:14px}
+.step.active{border:2px solid var(--navy);box-shadow:0 10px 26px rgba(30,58,95,.13)}
+.mission label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:16px;background:#fff;padding:13px;margin:9px 0;cursor:pointer;transition:.15s}
+.mission label:hover{border-color:#93b4e8;background:#f8fbff}
+.mission input{margin-top:5px;width:18px;height:18px;cursor:pointer;accent-color:var(--navy)}
+.mission label.done{text-decoration:line-through;color:var(--muted);background:#f8fafc}
+.missionTag{display:block;font-size:12.5px;font-weight:900;color:#9a3412;margin-bottom:4px;text-decoration:none}
+.startGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.startItem{border:1px solid var(--line);border-radius:16px;padding:13px 15px;background:#fff}
+.startTag{font-size:12.5px;font-weight:900;color:#166534;margin-bottom:5px}
+.startScene{font-weight:800;font-size:14.5px;line-height:1.5}
+.startNext{margin-top:7px;font-size:13.5px;line-height:1.55;color:#334155;background:#f8fafc;border-radius:10px;padding:8px 10px}
+.startNext b{color:var(--navy)}
+.answerDist{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.distItem{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13.5px;color:#334155}
+.distItem b{color:var(--navy);font-size:14.5px}
+.mission label.done .missionTag{color:var(--muted)}
+.missionStep{font-weight:800;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:999px;padding:2px 8px;margin-left:4px;font-size:11.5px;white-space:nowrap}
+.mission label.done .missionStep{color:var(--muted);background:#f1f5f9;border-color:var(--line)}
+.accordion .item{border:1px solid var(--line);border-radius:17px;margin:10px 0;overflow:hidden;background:#fff}
+.accTitle{width:100%;background:#fff;color:var(--ink);border-radius:0;justify-content:space-between;padding:15px 16px}
+.accBody{display:none;padding:0 16px 16px}
+.item.open .accBody{display:block}
+
+/* ── 문항별 결과 목록 ── */
+.indResultList{margin:8px 0 0;padding:0;list-style:none}
+.indResultList li{display:flex;gap:8px;font-size:14px;margin:5px 0;padding:8px 10px;background:#f8fafc;border-radius:10px}
+.indResultList li .irc{font-weight:900;color:var(--navy);flex-shrink:0}
+
+.save{position:fixed;right:16px;bottom:62px;background:#101828;color:#fff;border-radius:999px;padding:9px 13px;font-size:12px;z-index:9;box-shadow:0 12px 28px rgba(0,0,0,.18)}
+
+/* ── 라이선스 안내 ── */
+.licBtn{position:fixed;right:16px;bottom:16px;z-index:10;background:#fff;color:#334155;border:1px solid var(--line);border-radius:999px;padding:9px 15px;font-size:12.5px;font-weight:700;cursor:pointer;box-shadow:0 10px 24px rgba(16,24,40,.14);font-family:inherit}
+.licBtn:hover{background:#f0f6ff;border-color:#93b4e8;color:var(--navy)}
+.licOverlay{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:50;display:none;align-items:center;justify-content:center;padding:18px}
+.licOverlay.show{display:flex}
+.licPanel{background:#fff;border-radius:24px;max-width:720px;width:100%;max-height:86vh;overflow:auto;padding:26px 28px;box-shadow:0 30px 70px rgba(0,0,0,.3)}
+.licPanel h3{margin:0;font-size:21px}
+.licPanel h4{margin:22px 0 6px;font-size:15px;color:var(--navy)}
+.licPanel p{margin:6px 0;font-size:14.5px;line-height:1.7;color:#334155}
+.licPanel ul{margin:6px 0;padding-left:20px;font-size:14.5px;line-height:1.7;color:#334155}
+.licHead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.licClose{background:#f1f5f9;border:1px solid var(--line);border-radius:12px;padding:7px 13px;font-size:14px;cursor:pointer;font-family:inherit;color:#334155;flex-shrink:0}
+.licClose:hover{background:#e2e8f0}
+.licNote{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.7;color:#475569;margin-top:8px}
+.licTp{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:8px 0;font-size:14px}
+.licTp b{color:var(--navy)}
+.licPre{white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.6;background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:8px;max-height:260px;overflow:auto}
+
+/* ── ① 감정 온도계 ── */
+.thermometerCard{background:linear-gradient(135deg,#f0fdf4,#eef6ff);border:1px solid #bfdbfe;border-radius:24px;padding:22px;margin-bottom:20px}
+.thermometerCard h3{margin:0 0 6px;font-size:19px}
+.tempGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.tempOption{border:2px solid var(--line);border-radius:18px;padding:16px 12px;cursor:pointer;background:#fff;text-align:center;transition:.15s;user-select:none}
+.tempOption:hover{border-color:#93b4e8;background:#f0f6ff}
+.tempOption.selected{border-color:var(--navy);background:var(--navy);color:#fff}
+.tempOption.selected .tempMsg{color:rgba(255,255,255,.8)}
+.tempEmoji{font-size:28px;display:block;margin-bottom:6px}
+.tempLabel{font-weight:900;font-size:15px;display:block;margin-bottom:4px}
+.tempMsg{font-size:13px;color:var(--muted);line-height:1.4;display:block}
+.tempReply{display:none;margin-top:14px;padding:14px 16px;border-radius:16px;font-size:15px;line-height:1.6}
+.tempReply.show{display:block}
+
+/* ── ③ AI vs 교사 벤다이어그램 ── */
+.venWrap{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:20px;overflow:hidden;margin:14px 0}
+.venCol{padding:16px 18px}
+.venCol.aiCol{background:#f0f9ff;border-right:1px solid var(--line)}
+.venCol.teacherCol{background:#f0fdf4}
+.venCol h4{font-size:14px;margin:0 0 8px;color:var(--muted);font-weight:900;letter-spacing:.03em}
+.venCol li{font-size:14px;margin:5px 0;color:var(--ink)}
+.venCenter{background:linear-gradient(90deg,#f0f9ff,#f0fdf4);border-top:1px solid var(--line);padding:12px 18px;grid-column:1/-1}
+.venCenter h4{font-size:13px;color:var(--muted);margin:0 0 6px;font-weight:900}
+.venCenter .venTags{display:flex;flex-wrap:wrap;gap:6px}
+.venCenter .venTag{background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:13px}
+
+/* ── ⑦ 윤리 체크리스트 ── */
+.ethicsChecklist{background:#f8fafc;border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:12px}
+.ethicsChecklist .ecTitle{font-size:13px;font-weight:900;color:var(--muted);margin-bottom:8px}
+.ethicsItem{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-top:1px solid var(--line);font-size:14px}
+.ethicsItem:first-of-type{border-top:0;padding-top:0}
+.ethicsItem input{margin-top:3px;accent-color:var(--navy);width:16px;height:16px;flex-shrink:0;cursor:pointer}
+
+/* ── ② 핵심질문 박스 (진단화면) ── */
+.coreQ{background:linear-gradient(135deg,#eef6ff,#f0fdf4);border-left:4px solid var(--navy);border-radius:0 14px 14px 0;padding:12px 14px;margin:12px 0 16px;font-size:15px;color:#1e3a5f;line-height:1.6;font-style:italic}
+.coreQ::before{content:'💬 핵심 질문 ';font-weight:900;font-style:normal;display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+
+/* ── ④ G2형 자가진단 질문 ── */
+.selfCheckGrid{display:grid;gap:8px;margin:12px 0}
+.selfCheckItem{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.selfCheckCode{font-weight:900;color:var(--navy);font-size:15px;flex-shrink:0}
+.selfCheckQ{font-size:14px;color:#374151}
+
+/* ── ⑥ 성장 비전 선언문 ── */
+.visionCard{background:linear-gradient(135deg,#ecfdf3,#eef6ff);border:2px solid #86efac;border-radius:24px;padding:24px;margin-top:20px}
+.visionCard h3{margin:0 0 8px;font-size:19px}
+.visionInput{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 16px;margin:12px 0;flex-wrap:wrap}
+.visionInput .vi-pre{font-size:15px;color:var(--ink);white-space:nowrap}
+.visionInput input{flex:1;min-width:160px;border:0;outline:none;font-size:15px;font-family:inherit;color:var(--navy);font-weight:700;background:transparent}
+.visionInput .vi-suf{font-size:15px;color:var(--ink);white-space:nowrap}
+.visionSaved{display:none;background:#ecfdf3;border:1px solid #86efac;border-radius:12px;padding:10px 14px;font-size:14px;color:#166534;margin-top:8px}
+.visionSaved.show{display:block}
+.visionPrev{display:none;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:10px 14px;font-size:14px;color:#166534;margin-bottom:10px}
+.visionPrev.show{display:block}
+
+/* ── ⑧ 나선형 성장 구조 ── */
+.spiralWrap{display:flex;align-items:center;justify-content:center;gap:0;margin:14px 0;flex-wrap:wrap}
+.spiralStep{text-align:center;padding:14px 10px;background:#fff;border:1px solid var(--line);border-radius:18px;min-width:90px;flex:1}
+.spiralStep .sNum{font-size:22px;font-weight:950;letter-spacing:-.04em}
+.spiralStep .sLabel{font-size:13px;font-weight:900;margin-top:2px}
+.spiralStep .sSub{font-size:12px;color:var(--muted);margin-top:3px}
+.spiralArrow{font-size:20px;color:var(--muted);padding:0 6px;flex-shrink:0}
+.spiralNote{text-align:center;font-size:13px;color:var(--muted);margin-top:8px}
+
+/* ── 반응형 ── */
+@media(max-width:980px){
+  .heroGrid,.grid3,.grid2,.radarWrap,.summaryGrid,.changeGrid,.stageDefGrid,.needsGrid{grid-template-columns:1fr}
+  .competencyGrid{grid-template-columns:repeat(2,1fr)}
+  .timeline{grid-template-columns:repeat(2,1fr)}
+  .scale label{padding:12px 13px;font-size:15px}
+  .hero{padding:44px 0 34px}
+  .save{left:12px;right:132px;text-align:center;bottom:16px}
+  .card{padding:20px}
+  .preview{display:none}
+  .radarItem{grid-template-columns:1fr 50px 80px}
+  .tempGrid{grid-template-columns:1fr}
+  .venWrap{grid-template-columns:1fr}
+  .venCol.aiCol{border-right:0;border-bottom:1px solid var(--line)}
+}
+@media(max-width:480px){
+  .scale label{padding:11px 12px;font-size:14.5px;border-radius:12px}
+  .scaleLabels{font-size:12px}
+  .needsGrid,.startGrid{grid-template-columns:1fr}
+}
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .noPrint,.hero,.save,#intro,#diagnosisSection,.siteFooter,.licBtn,.licOverlay{display:none!important}
+  body{background:white}.wrap{max-width:100%;padding:0}main{padding:0}
+  .result{display:block!important}.card{box-shadow:none;border:0;margin:0;padding:0}
+  .printTitle{display:block!important}.accBody,.resultAccBody{display:block!important}
+  .grid2,.summaryGrid,.changeGrid{grid-template-columns:1fr 1fr}
+  .timeline,.stageDefGrid{grid-template-columns:repeat(4,1fr)}
+  button{display:none!important}
+  .resultAccBtn{display:flex!important;background:none;border:0;padding:0 0 6px;font-size:16px;font-weight:900;color:var(--navy);box-shadow:none}
+  .resultAccBtn .arrow{display:none}
+  .item,.priority,.mini,.resultSummaryCard,.missionHighlight,.startItem{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<!-- ════ HERO ════ -->
+<header class="hero noPrint">
+  <div class="wrap heroGrid">
+    <div>
+      <span class="kicker">🗺️ 2022 개정 교육과정으로 보는 내 수업</span>
+      <h1 class="title">우리 반<br>수업 성장 지도</h1>
+      <p class="lead">교실에서 마주하는 24가지 장면에서 지금 내 모습을 고르면, 다음 한 걸음이 보입니다.</p>
+      <div class="checks">
+        <span class="check">✓ 24가지 수업 장면</span>
+        <span class="check">✓ 6개 영역 성장 지도</span>
+        <span class="check">✓ 다음 한 걸음 안내</span>
+        <span class="check">✓ PDF 리포트 저장</span>
+      </div>
+      <div class="actions">
+        <button onclick="startDiagnosis()">진단 시작</button>
+        <button class="ghost" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">서비스 보기</button>
+      </div>
+      <div id="heroResumeBox" class="heroResume">
+        <b id="heroResumeMsg"></b>
+        <div class="heroResumeActions" id="heroResumeActions"></div>
+      </div>
+    </div>
+    <div class="preview">
+      <b>나는 어떤 성장 단계에 있을까요?</b>
+      <div class="sample">
+        <div class="typeChips">
+          <div class="chip">🌱 씨앗</div><div class="chip">🌿 새싹</div>
+          <div class="chip">🌳 나무</div><div class="chip">🍎 열매</div>
+        </div>
+        <p class="tiny">24문항 응답 후, 강점 영역과 먼저 키울 영역을 한 장의 성장 지도로 확인합니다.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main><div class="wrap">
+
+<!-- ════ INTRO ════ -->
+<section id="intro" class="card noPrint">
+  <h2>점수를 매기기 위한 진단이 아닙니다</h2>
+  <p class="muted">지금 서 있는 자리를 확인하고, 다음 수업에서 해 볼 한 가지를 찾는 성장 지도입니다.</p>
+
+  <!-- ① 감정 온도계 — 안심 메시지 역할 -->
+  <div class="thermometerCard" style="margin-top:18px">
+    <h3 style="margin-top:0">🌡️ 지금 나의 감정 온도는?</h3>
+    <p class="small muted">어떤 감정이든 괜찮습니다. 이 진단은 평가가 아니라 나침반입니다.</p>
+    <div class="tempGrid" id="tempGrid">
+      <div class="tempOption" onclick="selectTemp(this,'hot')">
+        <span class="tempEmoji">🔥</span>
+        <span class="tempLabel">설렘·기대</span>
+        <span class="tempMsg">"새로운 도구가 아이들에게 어떤 변화를 줄지 궁금해요!"</span>
+      </div>
+      <div class="tempOption" onclick="selectTemp(this,'warm')">
+        <span class="tempEmoji">🌊</span>
+        <span class="tempLabel">평온·관망</span>
+        <span class="tempMsg">"필요한 것만 취사선택하면 됩니다."</span>
+      </div>
+      <div class="tempOption" onclick="selectTemp(this,'cold')">
+        <span class="tempEmoji">❄️</span>
+        <span class="tempLabel">두려움·피로</span>
+        <span class="tempMsg">"또 새로운 걸 배워야 하나요? 따라가기 벅차요."</span>
+      </div>
+    </div>
+    <div class="tempReply" id="tempReply"></div>
+    <!-- 요구하지 않는 것: 온도계와 통합 -->
+    <div class="notRequiredRow" style="margin-top:14px">
+      <span class="notBadge">모든 수업에 에듀테크 필수 아님</span>
+      <span class="notBadge">특정 플랫폼·코딩 능력 불필요</span>
+      <span class="notBadge">24문항 모두 ④일 필요 없음</span>
+      <span class="notBadge">업무 자동화 숙련도 무관</span>
+    </div>
+  </div>
+
+  <!-- ② 고민 연결 카드 — 영역 소개 역할 -->
+  <h3 style="margin-top:24px">당신의 고민은 이미 한 영역과 이어져 있습니다</h3>
+  <div class="needsGrid" id="needsGrid"></div>
+
+  <!-- ③ 성장의 3단계 + 변하지 않는 것 통합 -->
+  <h3 style="margin-top:24px">도구는 바뀌어도 이 수업의 방향은 그대로입니다</h3>
+  <div class="stageDefGrid">
+    <div class="stageDef s1">
+      <div class="sdNum">🌱</div>
+      <div class="sdKo">씨앗</div>
+      <div class="sdEn">아직 시작 전</div>
+      <div class="sdDesc">관심은 있지만 수업에서 아직 해 보지 않은 단계</div>
+    </div>
+    <div class="stageDef s1">
+      <div class="sdNum">🌿</div>
+      <div class="sdKo">새싹</div>
+      <div class="sdEn">한두 번 시도</div>
+      <div class="sdDesc">해 보긴 했지만 아직 한 번씩에 그치는 단계</div>
+    </div>
+    <div class="stageDef s2">
+      <div class="sdNum">🌳</div>
+      <div class="sdKo">나무</div>
+      <div class="sdEn">수업에 자리 잡음</div>
+      <div class="sdDesc">수업의 흐름 속에 방법이 자리 잡은 단계</div>
+    </div>
+    <div class="stageDef s3">
+      <div class="sdNum">🍎</div>
+      <div class="sdKo">열매</div>
+      <div class="sdEn">확인하고 나눔</div>
+      <div class="sdDesc">학생 변화까지 확인하고 동료와 나누는 단계</div>
+    </div>
+  </div>
+  <p class="tiny muted" style="margin-top:6px">도구와 플랫폼은 해마다 바뀌지만, <b>깊이 있는 배움 · 맞춤 지원 · 학생 참여 · 과정 평가</b>라는 교육과정의 방향은 그대로입니다.</p>
+
+  <!-- 진단 시작 버튼 -->
+  <div class="actions" style="margin-top:20px">
+    <button onclick="startDiagnosis()">바로 진단하기</button>
+    <button class="ghost" onclick="toggleGuide()">영역 구성 더 보기 ▾</button>
+  </div>
+
+  <!-- 접기: 핵심가치 그룹 + AI vs 교사 + 교육과정 연계 -->
+  <div id="guide" style="display:none;margin-top:18px">
+    <h3 style="margin-top:0">6개 영역과 세 가지 힘</h3>
+    <div id="coreValueGroups"></div>
+
+    <h3 style="margin-top:20px">무엇을 도구에 맡기고, 무엇을 내가 할까</h3>
+    <p class="small muted" style="margin:0 0 10px">진단 문항에 나오는 도구들은 아래 왼쪽 칸의 일을 대신해 줍니다. 그렇게 아낀 시간을 오른쪽 칸에 쓰는 것이 이 진단이 바라는 방향입니다.</p>
+    <div class="venWrap">
+      <div class="venCol aiCol">
+        <h4>🤖 도구가 빠른 일</h4>
+        <ul>
+          <li>30명의 답을 순식간에 모아 정리하기</li>
+          <li>같은 기준으로 지치지 않고 반복 확인하기</li>
+          <li>수준이 다른 문제를 필요한 만큼 만들어 내기</li>
+          <li>흩어진 기록을 표와 그래프로 보여 주기</li>
+        </ul>
+      </div>
+      <div class="venCol teacherCol">
+        <h4>👩‍🏫 교사가 할 일</h4>
+        <ul>
+          <li>같은 오답 뒤에 놓인 저마다 다른 이유 읽기</li>
+          <li>이 단원에서 무엇을 남길지 정하기</li>
+          <li>틀린 답 앞에서 아이가 물러서지 않게 붙들기</li>
+          <li>결과가 가리키는 아이를 실제로 알고 있기</li>
+        </ul>
+      </div>
+      <div class="venCenter">
+        <h4>🤝 둘이 함께할 때 되는 일</h4>
+        <div class="venTags">
+          <span class="venTag">출발점 확인</span>
+          <span class="venTag">모두의 참여</span>
+          <span class="venTag">학생별 피드백</span>
+          <span class="venTag">성장 기록 남기기</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-top:16px">
+      <div class="mini"><b>이 진단이 살펴보는 것</b><ul><li>큰 질문과 삶으로 단원 묶기</li><li>출발점 확인과 맞춤 지원</li><li>모든 학생의 참여와 협력</li><li>과정을 보는 평가와 피드백</li><li>디지털 기초소양 지도</li><li>동료와 함께 만드는 수업</li></ul></div>
+      <div class="mini"><b>2022 개정 교육과정 근거</b><ul><li>깊이 있는 학습·교과 연계 → 영역 1</li><li>학생 맞춤형 교육·기초학력 → 영역 2</li><li>학생 주도성·협력적 소통 → 영역 3</li><li>과정을 중시하는 평가 → 영역 4</li><li>디지털 기초소양 → 영역 5</li><li>학교 교육과정 자율 운영·교원 협력 → 영역 6</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ DIAGNOSIS ════ -->
+<section id="diagnosisSection" class="card noPrint">
+  <h2>수업 장면 24가지</h2>
+  <p class="muted">이번 학기 실제 수업을 기준으로, 지금 내 모습에 가장 가까운 것을 고르세요. 정답은 없습니다.</p>
+  <p class="sourceNote">이 진단은 「2022 개정 초·중등학교 교육과정」(교육부 고시 제2022-33호) 총론의 수업·평가 방향을 6개 영역으로 나누어 제작자가 구성했습니다. 문항 속 도구 이름은 예시이며, 비슷한 기능의 다른 도구로 바꿔도 됩니다.</p>
+  <div class="progressWrap">
+    <div class="progressMeta">
+      <span id="progressText" class="small muted">0 / 24 응답</span>
+      <span id="domainProgressText" class="small muted"></span>
+    </div>
+    <div class="progress"><div id="progressBar" class="bar"></div></div>
+  </div>
+  <div class="stepNav">
+    <button class="ghost" id="btnPrev" onclick="goStep(-1)" style="padding:10px 16px;font-size:15px">← 이전</button>
+    <div class="stepDots" id="stepDots"></div>
+    <button id="btnNext" onclick="goStep(1)" style="padding:10px 16px;font-size:15px">다음 →</button>
+  </div>
+  <form id="survey"></form>
+
+  <!-- ★ 하단 네비게이션 (문항 바로 아래) -->
+  <div class="bottomNav" id="bottomNav">
+    <button class="ghost" id="btnPrevBottom" onclick="goStep(-1)" style="padding:12px 18px;font-size:15px">← 이전</button>
+    <div class="bottomNavNext">
+      <button id="btnNextBottom" onclick="goStep(1)" style="padding:16px 20px;font-size:17px">다음 →</button>
+    </div>
+  </div>
+  <!-- 완료 토스트 (3문항 모두 체크 시) -->
+  <div class="completionToast" id="completionToast">
+    <span class="toastIcon">✅</span>
+    <span class="toastText" id="completionToastText"></span>
+  </div>
+  <!-- 마지막 영역: 리포트 보기 -->
+  <div id="calcActions" class="actions" style="display:none;margin-top:20px">
+    <button type="button" onclick="calculate()">✨ 성장 리포트 보기</button>
+    <button class="ghost" type="button" onclick="saveProgress(true)">지금 저장</button>
+  </div>
+
+  <div class="dangerZone">
+    <p class="tiny muted">⚠ 아래 버튼은 모든 응답을 삭제합니다.</p>
+    <button class="danger" type="button" onclick="resetForm()" style="font-size:14px;padding:10px 14px">처음부터 다시 시작</button>
+  </div>
+</section>
+
+<!-- ════ RESULT ════ -->
+<section id="result" class="card result">
+  <h2 class="printTitle">우리 반 수업 성장 지도</h2>
+  <div id="resultSummary"></div>
+  <div id="missionHighlight" class="missionHighlight">
+    <h3 style="margin-top:0">✅ 다음 한 걸음</h3>
+    <p class="small muted">내가 고른 답 바로 다음 칸입니다. 세 가지 중 하나만 해도 충분합니다. 체크하면 저장됩니다.</p>
+    <div id="mission" class="mission"></div>
+    <div id="missionAllDone" class="missionAllDone">
+      🎉 세 걸음을 모두 옮겼습니다! 한 달 뒤 다시 진단해 변화를 확인해 보세요.<br>
+      <button style="margin-top:12px;font-size:15px" onclick="startDiagnosis()">재진단하기</button>
+    </div>
+  </div>
+  <div class="resultAccordion">
+    <div class="resultAccSection open" id="accScores">
+      <button class="resultAccBtn" onclick="toggleAcc('accScores')">
+        <span>📊 성장 지도 (6개 영역)</span><span class="arrow">▾</span>
+      </button>
+      <div class="resultAccBody"><div id="scores"></div></div>
+    </div>
+    <div class="resultAccSection open" id="accPriority">
+      <button class="resultAccBtn" onclick="toggleAcc('accPriority')">
+        <span>🎯 지금 먼저 키우면 좋은 영역</span><span class="arrow">▾</span>
+      </button>
+      <div class="resultAccBody"><div id="priority"></div></div>
+    </div>
+    <div class="resultAccSection open" id="accStart">
+      <button class="resultAccBtn" onclick="toggleAcc('accStart')">
+        <span>🌱 아직 시작 전인 것들</span><span class="arrow">▾</span>
+      </button>
+      <div class="resultAccBody"><div id="startList"></div></div>
+    </div>
+    <div class="resultAccSection" id="accTools">
+      <button class="resultAccBtn" onclick="toggleAcc('accTools')">
+        <span>🧰 이번 학기에 챙기면 좋은 것</span><span class="arrow">▾</span>
+      </button>
+      <div class="resultAccBody"><div id="toolList"></div></div>
+    </div>
+    <div class="resultAccSection" id="accWhy">
+      <button class="resultAccBtn" onclick="toggleAcc('accWhy')">
+        <span>🔍 왜 이런 결과가 나왔나요?</span><span class="arrow">▾</span>
+      </button>
+      <div class="resultAccBody"><div id="why" class="accordion"></div></div>
+    </div>
+    <div class="resultAccSection" id="accDetail">
+      <button class="resultAccBtn" onclick="toggleAcc('accDetail')">
+        <span>📋 영역별 지금과 다음 한 걸음</span><span class="arrow">▾</span>
+      </button>
+      <div class="resultAccBody"><div id="detail" class="accordion"></div></div>
+    </div>
+  </div>
+  <div class="actions noPrint" style="margin-top:20px">
+    <button onclick="savePDF()">📄 PDF로 저장</button>
+    <button class="secondary" onclick="startDiagnosis()">응답 수정</button>
+    <button class="ghost" onclick="clearResultOnly()">최근 결과 삭제</button>
+  </div>
+  <!-- PDF 안내 토스트 -->
+  <div id="pdfToast" style="display:none;margin-top:14px;background:#eef6ff;border:1px solid #bfdbfe;border-radius:16px;padding:14px 16px;font-size:14px;line-height:1.7;color:#1e3a5f">
+    <b>📄 PDF 저장 방법</b><br>
+    잠시 후 인쇄 창이 열립니다.<br>
+    <b>대상(프린터)</b>에서 <b>"PDF로 저장"</b> 또는 <b>"Microsoft Print to PDF"</b>를 선택하세요.<br>
+    <span style="color:var(--muted);font-size:13px">Mac: 좌하단 PDF 버튼 → "PDF로 저장" / Chrome: 대상에서 "PDF로 저장" 선택</span>
+  </div>
+
+  <!-- ★⑥ 성장 비전 선언문 -->
+  <div class="visionCard" id="visionCard">
+    <h3 style="margin-top:0">✍️ 나의 성장 비전 선언</h3>
+    <p class="small muted">오늘 진단을 마치며, 앞으로 성장해 나갈 나의 모습을 한 문장으로 선언해 보세요.</p>
+    <div id="visionPrev" class="visionPrev"></div>
+    <div class="visionInput">
+      <span class="vi-pre">나는 올해 우리 반 수업에서</span>
+      <input type="text" id="visionInput" placeholder="예: 모든 학생이 한 번은 말하는 수업" maxlength="40" oninput="onVisionInput()">
+      <span class="vi-suf">을/를 해 나갈 것이다.</span>
+    </div>
+    <button onclick="saveVision()" style="font-size:15px;padding:10px 18px">선언 저장하기</button>
+    <div id="visionSaved" class="visionSaved"></div>
+  </div>
+
+  <!-- ★⑧ 나선형 성장 구조 -->
+  <div style="margin-top:24px;padding:20px;background:#f8fafc;border:1px solid var(--line);border-radius:22px">
+    <h3 style="margin-top:0;font-size:17px">🔄 성장은 한 번으로 끝나지 않습니다</h3>
+    <div class="spiralWrap">
+  <div class="spiralWrap">
+    <div class="spiralStep" style="border-color:#fed7aa;background:#fff7ed">
+      <div class="sNum" style="color:#ea580c">🌱</div>
+      <div class="sLabel">씨앗</div>
+      <div class="sSub">지금 자리 확인</div>
+    </div>
+    <div class="spiralArrow">→</div>
+    <div class="spiralStep" style="border-color:#bfdbfe;background:#eff6ff">
+      <div class="sNum" style="color:#2563eb">🌿</div>
+      <div class="sLabel">새싹</div>
+      <div class="sSub">한 가지 해 보기</div>
+    </div>
+    <div class="spiralArrow">→</div>
+    <div class="spiralStep" style="border-color:#86efac;background:#f0fdf4">
+      <div class="sNum" style="color:#16a34a">🌳</div>
+      <div class="sLabel">나무</div>
+      <div class="sSub">수업에 자리 잡기</div>
+    </div>
+    <div class="spiralArrow">↩</div>
+    <div class="spiralStep" style="border-color:#c4b5fd;background:#faf5ff">
+      <div class="sNum" style="color:#7c3aed">🍎</div>
+      <div class="sLabel">열매</div>
+      <div class="sSub">확인하고 나누기</div>
+    </div>
+  </div>
+  <p class="spiralNote">한 번의 진단으로 끝나지 않습니다. 한 가지를 해 보고 기록한 뒤 다시 진단하면, 지도 위의 내 자리가 조금씩 옮겨 갑니다.<br>한 달 뒤 다시 해 보세요.</p>
+</div>
+
+<p class="tiny" style="margin-top:14px">이 진단은 「2022 개정 초·중등학교 교육과정」(교육부 고시 제2022-33호) 총론의 수업·평가 방향을 바탕으로 제작자가 설계한 자기점검 도구입니다. 공식 진단 도구가 아니며, 문항 속 도구 이름은 예시입니다.</p>
+
+</div></main>
+
+<!-- ★ 만든이: 최하단 푸터로 이동, 최소화 -->
+<footer class="siteFooter noPrint">2022 개정 교육과정 총론을 바탕으로 제작자가 구성한 자기점검 도구입니다. 문항 속 도구 이름은 각 사의 상표이며 제휴 관계가 없습니다.<br>© 2026 최창훈</footer>
+
+<div id="saveStatus" class="save noPrint">자동 저장 준비됨</div>
+
+<!-- ════ 라이선스·이용 안내 ════ -->
+<button class="licBtn noPrint" onclick="openLicense()" aria-haspopup="dialog">ⓘ 라이선스 안내</button>
+<div class="licOverlay" id="licOverlay" onclick="if(event.target===this)closeLicense()">
+  <div class="licPanel" role="dialog" aria-modal="true" aria-labelledby="licTitle">
+    <div class="licHead">
+      <h3 id="licTitle">라이선스·이용 안내</h3>
+      <button class="licClose" onclick="closeLicense()">닫기</button>
+    </div>
+
+    <h4>저작권</h4>
+    <p>「우리 반 수업 성장 지도」의 기획, 24개 문항과 선택지, 해설과 안내 문구, 화면 디자인과 코드는 제작자가 직접 만든 것입니다.<br>© 2026 최창훈. All rights reserved.</p>
+
+    <h4>근거 자료</h4>
+    <p>이 진단의 6개 영역은 「2022 개정 초·중등학교 교육과정」(교육부 고시 제2022-33호) 총론의 수업·평가 방향을 바탕으로 제작자가 나눈 것입니다. 고시·공고·훈령은 저작권법 제7조에 따라 보호받지 못하는 저작물입니다.</p>
+    <div class="licNote">이 사이트는 교육부·시도교육청 등 어떤 기관의 공식 진단 도구도 아니며, 어떤 기관과도 제휴 관계가 없습니다.</div>
+
+    <h4>글꼴</h4>
+    <p>글꼴 파일을 포함하거나 배포하지 않습니다. 보는 분의 기기에 이미 설치된 글꼴을 순서대로 지정해 쓸 뿐입니다(애플 시스템 글꼴, Segoe UI, Noto Sans KR 등). 글꼴이 없는 기기에서는 기본 고딕체로 표시됩니다.</p>
+
+    <h4>이모지·기호</h4>
+    <p>화면의 그림 문자는 유니코드 표준에 정해진 문자이며, 실제 모양은 보는 분의 기기 글꼴이 그립니다. 이 사이트는 이모지 이미지 파일을 포함하지 않습니다.</p>
+
+    <h4>도구 이름</h4>
+    <p>문항에 나오는 도구 이름은 그 기능을 설명하기 위한 예시입니다. 각 이름은 해당 회사의 상표이며, 이 사이트는 어느 회사와도 제휴·후원 관계가 없고 특정 제품의 사용을 권하지 않습니다.</p>
+
+    <h4>제3자 구성요소(오픈소스)</h4>
+    <div id="licThirdParty"></div>
+
+    <div class="licNote" style="margin-top:22px">문의나 수정 요청은 제작자에게 전해 주세요. 학교 연수·교직원 협의 목적의 이용은 자유롭게 하셔도 됩니다.</div>
+  </div>
+</div>
+
+<script>
+const STORAGE_PROGRESS='class_growth_map_progress_v1';
+const STORAGE_RESULT='class_growth_map_result_v1';
+const STORAGE_MISSION='class_growth_map_mission_v1';
+
+/* ════════ 영역 데이터 (2022 개정 교육과정 총론의 수업·평가 방향을 바탕으로 제작자가 구성) ════════ */
+const domains={
+ A:{
+  no:1,emoji:'🧭',name:'깊이 있는 배움 설계',user:'깊이 있는 배움',core:'배움 설계',cls:'A',coreValue:1,
+  base:'핵심 아이디어 중심의 깊이 있는 학습, 교과 간 연계, 삶과 연계한 학습',
+  desc:'큰 질문에서 출발해 단원을 묶고, 교과와 교과를 잇고, 학생의 생활 속 문제를 수업으로 가져오는 힘입니다. 도구를 먼저 고르지 않고 무엇을 배우게 할 것인지부터 정합니다.',
+  ind:['A1 단원 도입에서 학생 생각 모으기','A2 두 교과를 잇는 프로젝트','A3 삶과 연계한 문제 다루기','A4 수업 준비에 AI 활용하기'],
+  stages:[
+   '아직 교과서 흐름을 그대로 따라가는 단계입니다. 다음 단원의 큰 질문 하나를 정해 보는 것부터 시작할 수 있습니다.',
+   '학생 생각을 모으거나 교과를 잇는 시도를 한두 번 해 본 단계입니다.',
+   '큰 질문과 삶의 문제를 중심으로 단원을 구성하는 방식이 수업에 자리 잡은 단계입니다.',
+   '학생이 찾은 답이 교실 밖으로 이어지고, 동학년과 함께 설계해 결과를 비교하는 단계입니다.'
+  ]
+ },
+ B:{
+  no:2,emoji:'🎯',name:'한 명 한 명을 위한 맞춤 수업',user:'맞춤 수업',core:'맞춤 지원',cls:'B',coreValue:1,
+  base:'학생 맞춤형 교육, 기초학력 보장',
+  desc:'학생의 출발점을 확인하고, 빠른 학생과 느린 학생 모두에게 다른 길을 열어 주는 힘입니다. 디지털 도구는 30명을 한 명씩 보는 일을 돕는 자리에 놓입니다.',
+  ind:['B1 출발점 진단하기','B2 코스웨어 결과 읽기','B3 느린 학생 지원하기','B4 빠른 학생 지원하기'],
+  stages:[
+   '짐작이나 기억에 기대어 학생 수준을 파악하는 단계입니다. 다음 단원 전에 짧은 진단 한 번이 출발점이 됩니다.',
+   '진단을 해 보거나 따로 지도해 본 단계입니다. 결과를 수업 설계까지 가져오면 한 걸음 더 나아갑니다.',
+   '진단 결과와 학습 기록을 근거로 학생마다 다른 과제와 지원을 준비하는 단계입니다.',
+   '지원 뒤 변화를 다시 확인해 기록하고, 보호자·협력 교사와 함께 학생을 살피는 단계입니다.'
+  ]
+ },
+ C:{
+  no:3,emoji:'🙋',name:'학생이 이끄는 참여와 협력',user:'참여와 협력',core:'참여 촉진',cls:'C',coreValue:2,
+  base:'학생 주도성, 협력적 소통 역량',
+  desc:'손 드는 몇 명이 아니라 모든 학생이 말하고, 함께 만들고, 표현 방식을 스스로 고르게 하는 힘입니다. 교사는 설명하는 자리에서 질문하고 돕는 자리로 옮겨 갑니다.',
+  ind:['C1 모든 학생이 답하게 하기','C2 함께 만드는 결과물','C3 표현 방식 고르게 하기','C4 AI와 생각 비교하기'],
+  stages:[
+   '발표하는 학생이 정해져 있는 단계입니다. 모두가 동시에 답하는 질문 하나가 출발점이 됩니다.',
+   '실시간 응답이나 공동 편집 도구를 써 본 단계입니다. 아직 몇 명 위주로 진행되기도 합니다.',
+   '모든 학생이 각자의 몫을 맡고, 표현 방식을 고를 수 있는 수업이 자리 잡은 단계입니다.',
+   '학생끼리 서로의 생각을 비교하고 피드백하며, 방법 자체를 서로 배워 쓰는 단계입니다.'
+  ]
+ },
+ D:{
+  no:4,emoji:'💬',name:'과정을 보는 평가와 피드백',user:'평가와 피드백',core:'평가 환류',cls:'D',coreValue:2,
+  base:'학습 과정을 중시하는 평가, 평가 결과의 피드백',
+  desc:'배우는 도중에 방향을 알려 주는 평가를 운영하고, 그 결과를 학생 피드백과 다음 수업으로 돌려주는 힘입니다. 평가가 줄 세우기가 아니라 성장의 길잡이가 되게 합니다.',
+  ind:['D1 수업 끝 배움 확인','D2 채점 기준 만들기','D3 성장 기록 남기기','D4 개별 피드백 주기'],
+  stages:[
+   '결과물과 점수로 판단하는 단계입니다. 수업 끝 1문항 확인 질문이 출발점이 됩니다.',
+   '형성평가나 채점 기준을 써 본 단계입니다. 결과를 다음 수업으로 잇는 고리가 아직 약합니다.',
+   '기준을 학생과 나누고, 기록을 쌓고, 결과를 수업 개선에 쓰는 단계입니다.',
+   '학생이 스스로 성장을 돌아보고, 피드백을 읽고 고친 결과까지 확인하는 단계입니다.'
+  ]
+ },
+ E:{
+  no:5,emoji:'🛡️',name:'디지털 기초소양 기르기',user:'디지털 기초소양',core:'기초소양',cls:'E',coreValue:3,
+  base:'디지털 기초소양, 디지털 윤리와 시민성',
+  desc:'학생이 자료를 가려 읽고, AI의 답을 의심하고, 온라인에서 서로를 존중하도록 이끄는 힘입니다. 교사의 판단이 곧 학생이 배우는 본보기가 됩니다.',
+  ind:['E1 출처 확인하기','E2 AI 답 검증하기','E3 개인정보 지키기','E4 온라인 예절 세우기'],
+  stages:[
+   '문제가 생기면 그때 지도하는 단계입니다. 학생들과 약속 세 가지를 정하는 것이 출발점이 됩니다.',
+   '주의를 안내하는 단계입니다. 말로 그치지 않고 활동으로 만들면 한 걸음 더 나아갑니다.',
+   '출처 확인, AI 답 검증, 개인정보 점검이 수업의 절차로 자리 잡은 단계입니다.',
+   '학생들이 스스로 기준과 순서를 만들고, 서로의 태도를 살피는 단계입니다.'
+  ]
+ },
+ F:{
+  no:6,emoji:'🤝',name:'함께 만드는 수업',user:'함께 만드는 수업',core:'동료와 협력',cls:'F',coreValue:3,
+  base:'학교 교육과정의 자율적 편성·운영과 교원 간 협력',
+  desc:'혼자 준비하고 혼자 끝내는 대신, 동료와 함께 설계하고 나누고 돌아보는 힘입니다. 기록이 쌓이면 다음 해의 수업이 올해보다 쉬워집니다.',
+  ind:['F1 동학년과 함께 설계하기','F2 자료 나누기','F3 새 도구 판단하기','F4 수업 기록하고 돌아보기'],
+  stages:[
+   '각자 준비하고 각자 마치는 단계입니다. 공유 문서로 수업안 하나를 함께 쓰는 것이 출발점이 됩니다.',
+   '자료를 주고받는 단계입니다. 만드는 과정을 함께하면 한 걸음 더 나아갑니다.',
+   '함께 설계하고 정리해 올리고, 새 도구를 기준에 따라 시범 적용하는 단계입니다.',
+   '결과를 비교해 다시 고치고, 서로의 수업을 보며 학교 차원으로 넓히는 단계입니다.'
+  ]
+ }
+};
+
+const coreValues=[
+ {num:1,title:'수업을 짜는 힘',keys:['A','B'],color:'#7c3aed',desc:'무엇을 배우게 할 것인지 정하고, 학생마다 다른 길을 마련하는 영역입니다.'},
+ {num:2,title:'수업을 여는 힘',keys:['C','D'],color:'#2563eb',desc:'교실에서 학생이 실제로 움직이게 하고, 그 과정을 보아 되돌려 주는 영역입니다.'},
+ {num:3,title:'수업을 넓히는 힘',keys:['E','F'],color:'#16a34a',desc:'학생의 디지털 소양을 기르고, 동료와 함께 수업을 키워 가는 영역입니다.'}
+];
+
+const needs=[
+ {emoji:'🧭',text:'교과서 진도 말고 큰 질문으로 단원을 묶고 싶다',key:'A'},
+ {emoji:'🎯',text:'우리 반 학생들의 수준 차이를 어떻게 다룰지 모르겠다',key:'B'},
+ {emoji:'🙋',text:'수업에서 발표하는 학생만 발표한다',key:'C'},
+ {emoji:'💬',text:'평가 결과를 다음 수업에 제대로 쓰고 싶다',key:'D'},
+ {emoji:'🛡️',text:'학생들이 AI와 인터넷을 바르게 쓰도록 가르치고 싶다',key:'E'},
+ {emoji:'🤝',text:'동료 교사와 함께 수업을 만들어 가고 싶다',key:'F'}
+];
+
+/* 문항: [영역, 코드, 상황, [①②③④ 실천 수준], 주제] */
+const questions=[
+ ['A','A1','새 단원을 시작합니다.',[
+  '교과서 차시 순서대로 바로 진행한다.',
+  '첫 시간에 학생들이 이미 아는 것을 말로 들어 본다.',
+  '단원의 큰 질문을 정하고, 온라인 게시판(패들렛 등)에 학생들의 첫 생각을 모아 수업 흐름을 조정한다.',
+  '단원 끝에 같은 게시판에 다시 생각을 쓰게 해, 학생이 처음과 달라진 점을 스스로 찾게 한다.'],'단원 도입'],
+ ['A','A2','두 교과를 묶어 프로젝트를 하려 합니다.',[
+  '교과별로 따로 진행하는 편이다.',
+  '한 교과 결과물을 다른 교과 시간에 발표하는 정도로 연결해 본 적이 있다.',
+  '조사(검색·설문) → 정리(공동 문서) → 표현(캔바·영상 등)으로 이어지는 흐름을 두 교과 성취기준에 맞춰 짠다.',
+  '위 흐름을 동학년과 함께 설계해 여러 반에서 운영하고 결과를 비교한다.'],'교과 연계'],
+ ['A','A3','학생들의 생활 속 문제를 수업으로 가져옵니다.',[
+  '교과서 속 사례를 주로 다룬다.',
+  '학생 경험을 발표로 나누는 정도로 다룬다.',
+  '디지털 지도(지도 앱·구글 어스 등)와 온라인 설문으로 우리 동네·학교의 실제 자료를 모아 문제를 정한다.',
+  '학생들이 찾은 해결 방안을 학교나 지역에 실제로 전하는 활동까지 이어 간다.'],'삶과 연계'],
+ ['A','A4','수업 활동 아이디어가 막혔습니다.',[
+  '기존 지도서나 자료를 그대로 쓴다.',
+  '생성형 AI에 아이디어를 물어본 적이 있다.',
+  '생성형 AI가 준 아이디어 여러 개를 성취기준과 우리 반 상황에 비추어 골라내고 고쳐 쓴다.',
+  'AI 도움을 받아 만든 활동을 수업 후 효과와 함께 기록하고, 어떤 요청이 쓸모 있었는지 정리해 둔다.'],'수업 준비'],
+
+ ['B','B1','단원 시작 전 학생들의 출발점을 알고 싶습니다.',[
+  '지난 성적이나 느낌으로 짐작한다.',
+  '종이 진단지를 풀리고 채점한다.',
+  '퀴즈 도구(띵커벨·구글 설문 퀴즈 등)로 진단하고, 자동 집계 결과로 어려워하는 문항과 학생을 바로 찾는다.',
+  '진단 결과를 바탕으로 첫 차시부터 모둠 구성이나 과제를 다르게 준비한다.'],'출발점 진단'],
+ ['B','B2','AI 코스웨어(수준별 문제 추천 학습 도구)를 쓸 수 있습니다.',[
+  '아직 써 보지 않았다.',
+  '남는 시간에 학생들이 풀게 하는 정도로 쓴다.',
+  '교사용 화면에서 학생별 진도와 오답 유형을 확인하고 다음 수업에 반영한다.',
+  '코스웨어 결과와 수업 중 관찰을 함께 보고, 코스웨어가 놓친 부분을 교사가 따로 챙긴다.'],'코스웨어 활용'],
+ ['B','B3','배움이 느린 학생이 몇 명 있습니다.',[
+  '수업 시간 안에서 할 수 있는 만큼 돕는다.',
+  '쉬는 시간 등에 따로 불러 설명해 준다.',
+  '학습 기록(코스웨어·퀴즈 결과)과 관찰 메모를 모아 학생별로 막힌 지점을 정리하고 지원 계획을 세운다.',
+  '지원 후 같은 방식으로 다시 확인해 변화를 기록하고, 보호자·협력 교사와 나눈다.'],'느린 학생 지원'],
+ ['B','B4','과제를 금방 끝내는 학생들이 있습니다.',[
+  '기다리거나 친구를 돕게 한다.',
+  '추가 문제를 더 준다.',
+  '학급 플랫폼(구글 클래스룸·클래스팅 등)에 난도가 다른 선택 과제를 미리 올려 두고 스스로 고르게 한다.',
+  '학생이 고른 과제의 결과를 모아 다음 단원 선택 과제를 새로 조정한다.'],'빠른 학생 지원'],
+
+ ['C','C1','발표하는 학생만 발표합니다.',[
+  '손 드는 학생 위주로 진행한다.',
+  '번호 뽑기 등으로 발표자를 정한다.',
+  '실시간 응답 도구(멘티미터·띵커벨 등)로 모든 학생의 생각을 한 화면에 모아 함께 본다.',
+  '모인 응답 가운데 서로 다른 생각을 골라 학생끼리 토론하게 이어 간다.'],'전원 참여'],
+ ['C','C2','모둠 결과물을 함께 만듭니다.',[
+  '종이에 한 명이 대표로 정리한다.',
+  '공동 편집 도구를 써 본 적은 있지만 몇 명 위주로 진행된다.',
+  '공동 슬라이드·캔바 등에서 역할별 칸을 나눠 모두가 작업하게 한다.',
+  '편집 기록(버전 기록 등)으로 개인의 기여를 확인하고, 모둠 안에서 서로 피드백을 주게 한다.'],'협업 도구'],
+ ['C','C3','결과물의 형식을 정합니다.',[
+  '교사가 한 가지 형식을 정해 준다.',
+  '두세 가지 중에서 고르게 한다.',
+  '목표와 기준만 제시하고, 영상·카드뉴스·웹 게시물 등 표현 도구를 학생이 고르게 한다.',
+  '학생이 고른 도구와 이유를 발표하게 하고, 다음 활동에서 서로의 방법을 배워 쓰게 한다.'],'표현 선택권'],
+ ['C','C4','학생들이 AI와 대화하는 활동을 합니다.',[
+  '아직 해 보지 않았다.',
+  '교사가 AI에 질문하는 모습을 보여 준 적이 있다.',
+  '연령 기준을 확인한 교육용 도구나 교사 시연으로 AI 답을 보여 주고, 학생들이 친구의 생각과 비교해 토의하게 한다.',
+  '토의 뒤 AI 답에서 고칠 점을 학생들이 정리해 발표하게 한다.'],'AI와 생각 비교'],
+
+ ['D','D1','수업이 끝날 때 배움을 확인합니다.',[
+  '질문이 있는지 묻고 마친다.',
+  '몇 명에게 오늘 배운 점을 말해 보게 한다.',
+  '1~2문항짜리 온라인 확인 질문(구글 설문 등)을 받고 결과를 바로 본다.',
+  '확인 결과로 다음 차시 도입이나 모둠을 바꾼다.'],'수업 끝 확인'],
+ ['D','D2','채점 기준을 만듭니다.',[
+  '교사만 알고 채점한다.',
+  '활동 전에 학생에게 기준을 알려 준다.',
+  '기준을 학생과 함께 다듬고, 학급 플랫폼의 채점기준표 기능에 올려 과제마다 보이게 한다.',
+  '학생이 같은 기준으로 자기평가·동료평가를 하고, 교사 평가와 차이를 이야기 나눈다.'],'채점 기준'],
+ ['D','D3','한 학기 동안의 성장을 보여 주고 싶습니다.',[
+  '학기 말 결과물로 판단한다.',
+  '활동지를 파일에 모아 둔다.',
+  '디지털 포트폴리오(패들렛·클래스룸 폴더 등)에 결과물을 날짜별로 쌓게 한다.',
+  '학생이 포트폴리오를 돌아보며 가장 성장한 작품을 골라 이유를 쓰게 하고, 상담·통지에 활용한다.'],'성장 기록'],
+ ['D','D4','학생 30명에게 피드백을 줘야 합니다.',[
+  '점수나 확인 표시만 한다.',
+  '몇몇 학생에게만 자세히 써 준다.',
+  '댓글·음성 메모 기능으로 학생마다 짧은 피드백을 남긴다.',
+  'AI로 피드백 초안을 만들되 학생 정보는 넣지 않고 교사가 최종 문장을 고쳐 쓰며, 학생이 피드백을 읽고 고친 결과까지 확인한다.'],'개별 피드백'],
+
+ ['E','E1','학생들이 인터넷에서 자료를 찾습니다.',[
+  '찾은 내용을 그대로 옮겨도 둔다.',
+  '출처를 적으라고 말로 안내한다.',
+  '출처 쓰는 틀을 주고, 두 곳 이상에서 확인하게 한다.',
+  '믿을 만한 자료를 고르는 기준을 학생들과 함께 만들어 활동 때마다 점검한다.'],'출처 확인'],
+ ['E','E2','AI가 틀린 답을 내놓을 수 있습니다.',[
+  '이 점을 수업에서 다룬 적이 없다.',
+  '말로 주의를 준 적이 있다.',
+  '교사 시연 화면에서 AI 답의 오류를 학생들이 교과서·자료로 찾아보게 한다.',
+  '오류 찾기를 반복 활동으로 만들어, 학생들이 AI 답을 확인하는 순서를 스스로 쓰게 한다.'],'AI 답 검증'],
+ ['E','E3','새 에듀테크 도구에 학생 계정을 만들려 합니다.',[
+  '편리하면 바로 쓴다.',
+  '학생 이름 대신 번호를 쓰는 정도로 주의한다.',
+  '학교의 도구 선정 절차와 개인정보 처리 방침을 확인하고, 필요한 경우 보호자 동의를 받는다.',
+  '학생 얼굴·이름이 담긴 결과물의 공개 범위를 정하고, 학기 말에 계정과 자료를 정리한다.'],'개인정보'],
+ ['E','E4','온라인 게시판에 댓글이 오갑니다.',[
+  '문제가 생기면 그때 지도한다.',
+  '시작 전에 예절을 안내한다.',
+  '학생들과 함께 온라인 대화 약속을 정하고 게시판 첫머리에 둔다.',
+  '댓글 사례를 함께 살펴보며 약속을 고치고, 학생들이 서로 좋은 댓글을 찾아 칭찬하게 한다.'],'온라인 예절'],
+
+ ['F','F1','동학년 수업을 준비합니다.',[
+  '각자 준비한다.',
+  '완성된 자료를 나눠 받는다.',
+  '공유 드라이브 문서로 수업안을 함께 만들고 고친다.',
+  '함께 만든 수업을 반별로 운영한 뒤 결과를 비교해 수업안을 다시 고친다.'],'공동 설계'],
+ ['F','F2','만든 수업 자료가 쌓였습니다.',[
+  '내 컴퓨터에만 있다.',
+  '요청이 오면 보내 준다.',
+  '학교 공유 폴더나 교육 자료 공유 플랫폼에 정리해 올린다.',
+  '자료를 쓴 동료의 의견을 받아 고치고, 연수나 모임에서 사용법을 나눈다.'],'자료 나눔'],
+ ['F','F3','새로 나온 에듀테크 도구를 알게 됐습니다.',[
+  '관심이 가도 잘 시도하지 않는다.',
+  '혼자 써 보고 좋으면 수업에 쓴다.',
+  '수업 목표, 사용 편의, 개인정보 측면에서 따져 보고 작게 시범 적용한다.',
+  '시범 결과를 동료와 나누고, 학교 차원에서 쓸지 함께 판단한다.'],'도구 판단'],
+ ['F','F4','에듀테크를 쓴 수업을 돌아봅니다.',[
+  '따로 기록하지 않는다.',
+  '기억에 남는 점을 가끔 메모한다.',
+  '수업마다 잘된 점·아쉬운 점·다음에 바꿀 점을 짧게 기록한다.',
+  '기록을 모아 동료와 수업 나눔을 하고, 서로의 수업을 보며 함께 개선한다.'],'기록과 성찰']
+];
+
+const actions={
+ A:['다음 단원의 큰 질문 하나를 정하고 학생 첫 생각을 게시판에 모아 보세요.','교과서 차시 하나를 골라 우리 동네 자료로 바꿔 보세요.','AI에게 받은 활동 아이디어를 성취기준에 비추어 골라 써 보세요.'],
+ B:['다음 단원 시작 전 5문항 온라인 진단을 한 번 해 보세요.','진단 결과에서 같은 문항을 틀린 학생 3명을 묶어 지원해 보세요.','난도가 다른 선택 과제 2가지를 학급 플랫폼에 미리 올려 두세요.'],
+ C:['수업 중 모든 학생이 답하는 실시간 질문 하나를 넣어 보세요.','모둠 공동 문서에 역할별 칸을 나눠 작업하게 해 보세요.','결과물 형식을 학생이 고르게 하고 이유를 물어보세요.'],
+ D:['수업 끝 1문항 확인 질문을 받아 다음 차시 도입을 바꿔 보세요.','채점 기준 한 가지를 학생과 함께 다듬어 보세요.','피드백 초안을 AI로 만들되 학생 정보는 넣지 말고 문장은 직접 고쳐 보세요.'],
+ E:['학생들과 온라인 대화 약속 3가지를 정해 보세요.','AI 답 하나를 교과서로 확인하는 활동을 해 보세요.','새 도구를 쓰기 전 개인정보 처리 방침을 한 번 읽어 보세요.'],
+ F:['동학년과 공유 문서로 수업안 하나를 함께 써 보세요.','수업 자료 한 묶음을 정리해 공유 폴더에 올려 보세요.','수업 후 잘된 점·아쉬운 점·바꿀 점을 세 줄로 기록해 보세요.']
+};
+
+const typeRules=[
+ {name:'배움 설계가형',cond:a=>a.A>=3.2&&a.D>=3.0,desc:'큰 질문에서 출발해 수업과 평가를 잇는 데 강점이 있습니다.'},
+ {name:'참여 촉진형',cond:a=>a.C>=3.3,desc:'모든 학생이 말하고 함께 만드는 장면을 여는 데 강점이 있습니다.'},
+ {name:'맞춤 지원형',cond:a=>a.B>=3.3,desc:'학생 한 명 한 명의 출발점을 살피고 다른 길을 마련하는 데 강점이 있습니다.'},
+ {name:'평가 환류형',cond:a=>a.D>=3.3,desc:'배우는 과정을 보고 그 결과를 학생과 수업에 돌려주는 데 강점이 있습니다.'},
+ {name:'디지털 안내자형',cond:a=>a.E>=3.3,desc:'학생이 디지털을 바르고 안전하게 쓰도록 이끄는 데 강점이 있습니다.'},
+ {name:'함께 성장형',cond:a=>a.F>=3.3,desc:'동료와 함께 설계하고 나누며 수업을 키워 가는 데 강점이 있습니다.'}
+];
+
+const domainKeys=Object.keys(domains);
+const OPT_MARKS=['①','②','③','④'];
+const MAX_SCORE=4;
+let currentStep=0;
+
+/* ── 영역별 돌아보는 질문 ── */
+const coreQuestions={
+ A:'이번 단원에서 학생이 오래 기억했으면 하는 것 한 가지는 무엇인가요? 그것이 수업의 첫 질문에 담겨 있나요?',
+ B:'우리 반에서 지금 가장 도움이 필요한 학생 한 명을 떠올려 보세요. 그 학생이 어디서 막혔는지 근거를 가지고 말할 수 있나요?',
+ C:'지난 수업에서 한 마디도 하지 않은 학생이 몇 명이었을까요? 그 학생에게 말할 자리를 어떻게 만들 수 있을까요?',
+ D:'오늘의 평가 결과를 보고 내일의 수업에서 무엇을 바꿀 수 있을까요? 평가가 기록으로만 남고 있지는 않나요?',
+ E:'학생들은 내가 AI와 인터넷을 다루는 모습을 보고 배웁니다. 나는 어떤 본보기를 보여 주고 있나요?',
+ F:'올해 내가 만든 수업 자료 가운데 동료와 나눈 것은 몇 개인가요? 혼자 하는 준비가 나를 지치게 하고 있지는 않나요?'
+};
+
+/* ── 영역별 자가진단 질문 ── */
+const selfCheckQuestions={
+ A:{q:'나는 이번 단원을 관통하는 큰 질문을 한 문장으로 말할 수 있는가?'},
+ B:{q:'나는 우리 반 학생의 수준 차이를 근거를 가지고 설명할 수 있는가?'},
+ C:{q:'내 수업에서 모든 학생이 한 번은 자기 생각을 드러내는가?'},
+ D:{q:'나는 평가 결과를 다음 차시 계획에 실제로 반영하고 있는가?'},
+ E:{q:'나는 학생 정보와 AI 답을 다룰 때 지키는 기준을 말할 수 있는가?'},
+ F:{q:'나는 수업을 혼자 준비하지 않고 동료와 함께 만들어 가고 있는가?'}
+};
+
+/* ── 디지털 기초소양 점검표 ── */
+const ethicsItems=[
+ '사용한 이미지·폰트·음원은 저작권 문제가 없는가? (또는 출처를 표기했는가)',
+ '학생의 얼굴이나 개인정보가 동의 없이 노출되지 않았는가',
+ 'AI가 만든 내용에 틀린 정보나 편향된 표현이 없는지 확인했는가',
+ '모든 학생(느린 학습자 포함)이 소외되지 않고 참여할 수 있는가'
+];
+
+const STORAGE_VISION='class_growth_map_vision_v1';
+const STORAGE_TEMP='class_growth_map_temp_v1';
+
+/* ════ 렌더링: intro ════ */
+function renderIntro(){
+  // 저장된 감정 온도 복원
+  const savedTemp=load(STORAGE_TEMP);
+  if(savedTemp){
+    const el=document.querySelector(`.tempOption[onclick*="${savedTemp}"]`);
+    if(el){el.classList.add('selected');showTempReply(savedTemp);}
+  }
+
+  // 교사 자연적 필요 카드
+  document.getElementById('needsGrid').innerHTML=needs.map(n=>{
+    const d=domains[n.key];
+    return`<div class="needCard">
+      <div class="needEmoji">${n.emoji}</div>
+      <div class="needText">
+        <b>${n.text}</b>
+        <span class="needTag" style="background:${getCvColor(d.coreValue)}">${d.emoji} ${d.user} (영역 ${d.no})</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  // 핵심가치 그룹
+  document.getElementById('coreValueGroups').innerHTML=coreValues.map(cv=>`
+    <div class="coreValueGroup">
+      <div class="coreValueLabel">
+        <div class="cvNum" style="background:${cv.color}">${cv.num}</div>
+        <span class="cvTitle">${cv.title}</span>
+        <span class="cvSub">— 영역 ${cv.keys.map(x=>domains[x].no).join(', ')}</span>
+      </div>
+      <p class="small muted" style="margin:0 0 10px">${cv.desc}</p>
+      <div class="cvCards" style="grid-template-columns:repeat(${cv.keys.length>2?2:cv.keys.length},1fr)">
+        ${cv.keys.map(k=>{const d=domains[k];return`
+          <div class="compCard" style="text-align:left;padding:12px 14px">
+            <span class="tag ${d.cls}" style="font-size:13px">영역 ${d.no}</span>
+            <b style="display:block;margin-top:8px;font-size:14px">${d.emoji} ${d.name}</b>
+            <span style="font-size:12px;color:var(--muted)">${d.base}</span>
+          </div>`}).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function getCvColor(n){return['','#7c3aed','#2563eb','#16a34a'][n]}
+
+/* ════ 렌더링: 진단 ════ */
+function renderSurvey(){
+  const survey=document.getElementById('survey');
+  survey.innerHTML='';
+  domainKeys.forEach((k,si)=>{
+    const d=domains[k];
+    const cv=coreValues.find(c=>c.keys.includes(k));
+    let html=`<div class="domainStep${si===currentStep?' active':''}" id="step_${si}">`;
+    // 영역 헤더 카드
+    html+=`<div class="domainHeader">
+      <div class="domainBadge">
+        <span class="tag ${d.cls}">영역 ${d.no}</span>
+        <span class="domainName">${d.emoji} ${d.name}</span>
+      </div>
+      <div class="domainCoreValue">${cv.title} · 교육과정 근거: ${d.base}</div>
+      <div class="domainDesc">${d.desc}</div>
+    </div>`;
+    // ★② 핵심 질문 박스
+    if(coreQuestions[k]){
+      html+=`<div class="coreQ">${coreQuestions[k]}</div>`;
+    }
+    // 이 영역에서 살펴보는 것
+    html+=`<div class="indBox"><div class="indTitle">이 영역에서 살펴보는 것</div>`;
+    d.ind.forEach((ind,ii)=>{
+      const code=k+(ii+1);
+      html+=`<div class="indItem"><span class="indCode">${code}</span><span>${ind.replace(/^[A-F]\d\s/,'')}</span></div>`;
+    });
+    html+=`</div>`;
+    // 문항 — 상황형 4지선다
+    questions.filter(q=>q[0]===k).forEach(q=>{
+      html+=`<div class="q">
+        <div class="qtitle">${q[1]}. ${q[2]}</div>
+        <div class="qhint">${q[4]} · 지금 내 모습에 가장 가까운 것을 고르세요.</div>
+        <div class="scaleWrap">
+          <div class="scale">${q[3].map((opt,oi)=>`<label><input type="radio" name="${q[1]}" value="${oi+1}" onchange="onAnswerChange()"><span class="optMark">${OPT_MARKS[oi]}</span><span>${opt}</span></label>`).join('')}</div>
+        </div>
+      </div>`;
+    });
+    html+='</div>';
+    survey.innerHTML+=html;
+  });
+  renderStepDots();
+  updateStepNav();
+  hideToast();
+}
+
+function renderStepDots(){
+  document.getElementById('stepDots').innerHTML=domainKeys.map((k,i)=>
+    `<div class="stepDot${i===currentStep?' active':i<currentStep?' done':''}"></div>`).join('');
+}
+
+function updateStepNav(){
+  const prev=document.getElementById('btnPrev'),next=document.getElementById('btnNext'),calc=document.getElementById('calcActions');
+  const prevB=document.getElementById('btnPrevBottom'),nextB=document.getElementById('btnNextBottom'),bottomNav=document.getElementById('bottomNav');
+  const isLast=currentStep===domainKeys.length-1;
+  const nextLabel=isLast?'':`다음 → (${domains[domainKeys[currentStep+1]].emoji} ${domains[domainKeys[currentStep+1]].user})`;
+
+  // 상단 네비
+  prev.disabled=currentStep===0;prev.style.opacity=currentStep===0?'.4':'1';
+  if(isLast){next.style.display='none';calc.style.display='flex';}
+  else{next.style.display='inline-flex';next.textContent=nextLabel;calc.style.display='none';}
+
+  // 하단 네비
+  prevB.disabled=currentStep===0;prevB.style.opacity=currentStep===0?'.4':'1';
+  if(isLast){
+    bottomNav.style.display='none'; // 마지막엔 하단 nav 숨기고 calcActions만
+  } else {
+    bottomNav.style.display='flex';
+    nextB.textContent=nextLabel;
+  }
+
+  // 도메인 진행 텍스트
+  const domQs=questions.filter(q=>q[0]===domainKeys[currentStep]);
+  const domDone=domQs.filter(q=>document.querySelector(`input[name=${q[1]}]:checked`)).length;
+  document.getElementById('domainProgressText').textContent=`${domains[domainKeys[currentStep]].emoji} ${domains[domainKeys[currentStep]].user} ${domDone}/${domQs.length}`;
+
+  // 완료 토스트 & 하단 버튼 강조
+  checkDomainComplete();
+}
+
+function goStep(dir){
+  if(dir===1){
+    const domQs=questions.filter(q=>q[0]===domainKeys[currentStep]);
+    const missing=domQs.filter(q=>!document.querySelector(`input[name=${q[1]}]:checked`));
+    if(missing.length){
+      // confirm 대신 미응답 문항을 시각적으로 강조하고 첫 미응답으로 스크롤
+      missing.forEach(q=>{
+        const el=document.querySelector(`input[name=${q[1]}]`);
+        if(el){
+          const wrap=el.closest('.q');
+          if(wrap){
+            wrap.style.background='#fff7ed';
+            wrap.style.borderRadius='12px';
+            wrap.style.padding='14px';
+            wrap.style.transition='background .4s';
+            setTimeout(()=>{wrap.style.background='';wrap.style.borderRadius='';wrap.style.padding='18px 0';},2500);
+          }
+        }
+      });
+      // 첫 미응답 문항으로 스크롤
+      const firstMissQ=document.querySelector(`input[name=${missing[0][1]}]`);
+      if(firstMissQ) firstMissQ.closest('.q').scrollIntoView({behavior:'smooth',block:'center'});
+      // 토스트에 경고 메시지
+      showToast(`${missing.length}개 문항을 아직 응답하지 않았습니다. 주황색 문항을 확인해 주세요.`,'warn');
+      return;
+    }
+  }
+  const next=currentStep+dir;
+  if(next<0||next>=domainKeys.length)return;
+  document.getElementById('step_'+currentStep).classList.remove('active');
+  currentStep=next;
+  document.getElementById('step_'+currentStep).classList.add('active');
+  // 토스트 초기화
+  hideToast();
+  renderStepDots();updateStepNav();
+  document.getElementById('diagnosisSection').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ════ 응답/저장 ════ */
+function getAnswers(){const a={};questions.forEach(q=>{const el=document.querySelector(`input[name=${q[1]}]:checked`);if(el)a[q[1]]=+el.value});return a}
+function applyAnswers(a){Object.entries(a||{}).forEach(([k,v])=>{const el=document.querySelector(`input[name=${k}][value="${v}"]`);if(el)el.checked=true});updateProgress(false)}
+function updateProgress(save=true){
+  const done=Object.keys(getAnswers()).length;
+  document.getElementById('progressText').textContent=`${done} / ${questions.length} 응답`;
+  document.getElementById('progressBar').style.width=(done/questions.length*100)+'%';
+  updateStepNav();if(save)saveProgress(false);
+}
+/* ════ ① 감정 온도계 ════ */
+const tempReplies={
+  hot:{bg:'#fff7ed',border:'#fed7aa',text:'#9a3412',msg:'설레는 마음이 최고의 출발점입니다. 그 에너지를 학생 성장으로 연결하는 구체적인 방법을 이 진단에서 찾아보세요. 🔥'},
+  warm:{bg:'#f0f9ff',border:'#bae6fd',text:'#075985',msg:'냉정한 시각이 오히려 지속 가능한 실천을 만듭니다. 나에게 정말 필요한 한 가지를 골라 작게 시작해 보세요. 🌊'},
+  cold:{bg:'#f0fdf4',border:'#86efac',text:'#166534',msg:'그 피로감은 충분히 이해됩니다. 이 진단은 더 하라는 것이 아니라 무엇을 덜어낼지 찾는 도구입니다. 부담 없이 시작해 보세요. ❄️→🌱'}
+};
+function selectTemp(el,type){
+  document.querySelectorAll('.tempOption').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  showTempReply(type);
+  localStorage.setItem(STORAGE_TEMP,JSON.stringify(type));
+}
+function showTempReply(type){
+  const r=tempReplies[type];if(!r)return;
+  const box=document.getElementById('tempReply');
+  box.style.background=r.bg;box.style.border=`1px solid ${r.border}`;
+  box.style.color=r.text;box.style.borderRadius='14px';
+  box.textContent=r.msg;box.classList.add('show');
+}
+
+/* ════ ⑥ 성장 비전 선언문 ════ */
+function onVisionInput(){
+  const v=document.getElementById('visionInput').value;
+  document.getElementById('visionSaved').classList.remove('show');
+}
+function saveVision(){
+  const v=document.getElementById('visionInput').value.trim();
+  if(!v){alert('비전을 입력해 주세요.');return;}
+  const data={text:v,savedAt:new Date().toISOString()};
+  localStorage.setItem(STORAGE_VISION,JSON.stringify(data));
+  const box=document.getElementById('visionSaved');
+  box.textContent=`✅ 선언 저장됨 (${new Date().toLocaleString('ko-KR')})`;
+  box.classList.add('show');
+}
+function loadVision(){
+  const v=load(STORAGE_VISION);
+  if(!v)return;
+  const prev=document.getElementById('visionPrev');
+  if(prev){
+    prev.innerHTML=`📌 지난 선언: <b>"나는 AI·디지털을 도구 삼아 ${v.text}을/를 실현하는 교사로 성장할 것이다."</b><br><span class="tiny">${new Date(v.savedAt).toLocaleString('ko-KR')}</span>`;
+    prev.classList.add('show');
+  }
+  const input=document.getElementById('visionInput');
+  if(input)input.placeholder=v.text;
+}
+
+function onAnswerChange(){
+  updateProgress(true);
+  checkDomainComplete();
+}
+
+/* 현재 영역 전체 완료 여부 체크 → 토스트 + 하단 버튼 강조 */
+function checkDomainComplete(){
+  const isLast=currentStep===domainKeys.length-1;
+  const domQs=questions.filter(q=>q[0]===domainKeys[currentStep]);
+  const domDone=domQs.filter(q=>document.querySelector(`input[name=${q[1]}]:checked`)).length;
+  const allDone=domDone===domQs.length;
+
+  if(isLast) return; // 마지막 영역은 calcActions가 담당
+
+  const nextB=document.getElementById('btnNextBottom');
+  if(allDone){
+    nextB.classList.add('allDone');
+    const nextDomain=domains[domainKeys[currentStep+1]];
+    showToast(`✓ 이 영역 완료! 다음은 ${nextDomain.emoji} ${nextDomain.user}입니다.`,'done');
+    // 하단 버튼으로 부드럽게 스크롤 유도 (첫 완료 시에만)
+    if(domDone===domQs.length){
+      setTimeout(()=>{
+        nextB.scrollIntoView({behavior:'smooth',block:'nearest'});
+      },400);
+    }
+  } else {
+    nextB.classList.remove('allDone');
+    hideToast();
+  }
+}
+
+function showToast(msg, type){
+  const t=document.getElementById('completionToast');
+  const txt=document.getElementById('completionToastText');
+  txt.textContent=msg;
+  t.style.background=type==='warn'?'#fff7ed':'#ecfdf3';
+  t.style.borderColor=type==='warn'?'#fed7aa':'#86efac';
+  t.querySelector('.toastIcon').textContent=type==='warn'?'⚠️':'✅';
+  txt.style.color=type==='warn'?'#9a3412':'#166534';
+  t.classList.remove('show');
+  void t.offsetWidth; // reflow for animation
+  t.classList.add('show');
+}
+
+function hideToast(){
+  document.getElementById('completionToast').classList.remove('show');
+}
+function setStatus(m){document.getElementById('saveStatus').textContent=m}
+function saveProgress(alertIt){
+  const data={answers:getAnswers(),savedAt:new Date().toISOString(),step:currentStep};
+  localStorage.setItem(STORAGE_PROGRESS,JSON.stringify(data));
+  setStatus('자동 저장됨 · '+new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}));
+  if(alertIt)alert('현재 응답을 저장했습니다. 새로고침해도 이어할 수 있습니다.');
+}
+function load(key){try{return JSON.parse(localStorage.getItem(key)||'null')}catch(e){return null}}
+
+/* ════ 네비게이션 ════ */
+function startDiagnosis(){document.getElementById('diagnosisSection').scrollIntoView({behavior:'smooth'})}
+function toggleGuide(){const g=document.getElementById('guide');g.style.display=g.style.display==='none'?'grid':'none'}
+
+/* ════ 히어로 이어하기 ════ */
+function showHeroResume(){
+  const p=load(STORAGE_PROGRESS),r=load(STORAGE_RESULT);
+  const box=document.getElementById('heroResumeBox'),msg=document.getElementById('heroResumeMsg'),acts=document.getElementById('heroResumeActions');
+  let h=false;
+  if(p&&Object.keys(p.answers||{}).length){
+    msg.textContent='이전에 진행하던 진단이 있습니다. (저장: '+new Date(p.savedAt).toLocaleString('ko-KR')+')';
+    acts.innerHTML=`<button onclick="restoreProgress()">이어하기</button><button class="ghost" onclick="resetForm()">처음부터</button>`
+      +(r?`<button class="ghost" onclick="renderSavedResult()" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3)">최근 결과 보기</button>`:'');
+    h=true;
+  } else if(r){
+    msg.textContent='최근 성장 리포트가 있습니다. (진단일: '+new Date(r.savedAt).toLocaleString('ko-KR')+')';
+    acts.innerHTML=`<button class="ghost" onclick="renderSavedResult()" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3)">최근 결과 보기</button>`;
+    h=true;
+  }
+  if(h)box.style.display='block';
+}
+
+function restoreProgress(){
+  const p=load(STORAGE_PROGRESS);
+  if(p){if(p.step!==undefined)currentStep=p.step;renderSurvey();applyAnswers(p.answers);startDiagnosis();setStatus('이전 응답 복원됨');}
+}
+
+/* ════ 계산/결과 ════ */
+function stageByScore(s){
+  if(s<2.0)return{name:'씨앗',idx:0,cls:'stage0',next:'새싹',label:'아직 시작 전이거나 관심을 두는 중',range:'1.0~1.9점'};
+  if(s<2.8)return{name:'새싹',idx:1,cls:'stage1',next:'나무',label:'한두 번 시도해 본 중',range:'2.0~2.7점'};
+  if(s<3.5)return{name:'나무',idx:2,cls:'stage2',next:'열매',label:'수업 속에 자리 잡는 중',range:'2.8~3.4점'};
+  return{name:'열매',idx:3,cls:'stage3',next:'나눔 넓히기',label:'학생 변화를 확인하고 나누는 중',range:'3.5~4.0점'};
+}
+const STAGE_BADGES='<span class="pill stage0">씨앗 1.0~1.9</span><span class="pill stage1">새싹 2.0~2.7</span><span class="pill stage2">나무 2.8~3.4</span><span class="pill stage3">열매 3.5~4.0</span>';
+function buildResult(a){
+  const scores={};domainKeys.forEach(k=>scores[k]=[]);
+  questions.forEach(q=>scores[q[0]].push(+a[q[1]]));
+  const avg={},subs={};
+  domainKeys.forEach(k=>{avg[k]=scores[k].reduce((x,y)=>x+y,0)/scores[k].length;subs[k]=questions.filter(q=>q[0]===k).map(q=>[q[1],a[q[1]]])});
+  const entries=Object.entries(avg).sort((a,b)=>b[1]-a[1]);
+  const overall=Object.values(avg).reduce((x,y)=>x+y,0)/domainKeys.length;
+  return{answers:a,avg,subs,entries,overall};
+}
+function calculate(){
+  const missing=questions.filter(q=>!document.querySelector(`input[name=${q[1]}]:checked`));
+  if(missing.length){alert('응답하지 않은 문항: '+missing.map(m=>m[1]).join(', '));return}
+  const r=buildResult(getAnswers());
+  localStorage.setItem(STORAGE_RESULT,JSON.stringify({...r,savedAt:new Date().toISOString()}));
+  renderResult(r);setStatus('성장 리포트 저장됨');
+}
+function renderSavedResult(){
+  const r=load(STORAGE_RESULT);
+  if(!r){alert('저장된 결과가 없습니다.');return;}
+  renderResult(r);
+}
+function teacherType(avg){return typeRules.find(t=>t.cond(avg))||{name:'균형 성장형',desc:'여섯 영역을 고르게 다져 가는 유형입니다. 가장 낮은 영역 하나를 정해 작게 실천하면 좋습니다.'}}
+function weakSub(r,k){return r.subs[k].slice().sort((a,b)=>a[1]-b[1])[0]}
+function effect(k){return{A:'AI 활용이 수업 목표와 학생 성장에 맞는지 더 분명하게 판단할 수 있습니다.',B:'학생 데이터와 AI 생성물을 더 안전하고 책임 있게 다룰 수 있습니다.',C:'학생의 이해도와 지원 필요 지점을 더 빨리 파악할 수 있습니다.',D:'수업 활동, 평가, 도구 선택이 더 자연스럽게 연결됩니다.',E:'모든 학생의 생각을 수업 안으로 끌어내고 참여를 높일 수 있습니다.',F:'평가가 끝이 아니라 피드백과 다음 수업 개선으로 이어집니다.',G:'혼자 시도하고 끝내지 않고 지속 가능한 성장 루틴을 만들 수 있습니다.'}[k]}
+
+function renderResult(r){
+  const avg=r.avg,entries=r.entries,top=entries[0],low=entries[entries.length-1],secondLow=entries[entries.length-2];
+  const overall=r.overall,oStage=stageByScore(overall),type=teacherType(avg);
+  const dist=[0,0,0,0];answeredList(r).forEach(x=>{if(x.val>=1&&x.val<=MAX_SCORE)dist[x.val-1]++});
+
+  document.getElementById('resultSummary').innerHTML=`
+    <div class="resultSummaryCard">
+      <span class="pill ${oStage.cls}">${oStage.name}</span>
+      <div class="typeName">${type.name}</div>
+      <p style="margin:6px 0 14px;color:#334155">${type.desc}</p>
+      <div class="answerDist">${OPT_MARKS.map((mk,i)=>`<span class="distItem"><b>${mk}</b> ${dist[i]}문항</span>`).join('')}</div>
+    <div class="overallScore">전체 평균 <strong>${overall.toFixed(1)}점</strong> · ${oStage.label}
+        <span class="tiny" style="color:var(--muted)">(${oStage.range})</span>
+      </div>
+      <div class="summaryGrid">
+        <div class="summaryItem"><div class="label">💪 강점 영역</div><div class="val">${domains[top[0]].emoji} ${domains[top[0]].user}</div><div class="tiny">${top[1].toFixed(1)}점</div></div>
+        <div class="summaryItem"><div class="label">🌱 먼저 키울 영역</div><div class="val">${domains[low[0]].emoji} ${domains[low[0]].user}</div><div class="tiny">${low[1].toFixed(1)}점 · 지금 가장 효과적인 한 가지</div></div>
+      </div>
+    </div>`;
+
+  renderMission(r);
+  document.getElementById('scores').innerHTML=radarHTML(avg);
+  setTimeout(()=>drawRadarChart(avg),0);
+  document.getElementById('priority').innerHTML=priorityHTML(r,low[0],secondLow[0]);
+  document.getElementById('startList').innerHTML=startListHTML(r);
+  document.getElementById('toolList').innerHTML=toolListHTML(r);
+  document.getElementById('why').innerHTML=whyHTML(r,low[0],top[0]);
+  document.getElementById('detail').innerHTML=domainKeys.map(k=>detailHTML(r,k)).join('');
+  document.getElementById('result').style.display='block';
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+  // ⑥ 비전 선언문 이전 기록 로드
+  loadVision();
+}
+
+function toggleAcc(id){document.getElementById(id).classList.toggle('open')}
+
+/* ── 레이더 ── */
+function radarHTML(avg){
+  return`<div class="radarWrap">
+    <div class="radarBox"><canvas id="radarChart" width="620" height="520" aria-label="6개 영역 방사형 차트"></canvas></div>
+    <div class="radarLegend">
+      <div class="stageBadgeRow">${STAGE_BADGES}</div>
+      ${domainKeys.map(k=>{const st=stageByScore(avg[k]);return`
+        <div class="radarItem"><b>${domains[k].emoji} ${domains[k].user}</b><strong>${avg[k].toFixed(1)}점</strong><span class="pill ${st.cls}">${st.name}</span></div>`}).join('')}
+    </div>
+  </div>`;
+}
+function drawRadarChart(avg){
+  const canvas=document.getElementById('radarChart');if(!canvas)return;
+  const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const keys=domainKeys,cx=W/2,cy=H/2-10,maxR=Math.min(W,H)*0.34,levels=4;
+  ctx.lineWidth=1;
+  for(let l=1;l<=levels;l++){
+    const r=maxR*l/levels;ctx.beginPath();
+    keys.forEach((k,i)=>{const a=-Math.PI/2+i*2*Math.PI/keys.length,x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});
+    ctx.closePath();ctx.strokeStyle=l===levels?'rgba(30,58,95,.35)':'rgba(30,58,95,.16)';ctx.stroke();
+    ctx.fillStyle='rgba(102,112,133,.85)';ctx.font='16px -apple-system,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(l),cx+5,cy-r+10);
+  }
+  keys.forEach((k,i)=>{
+    const a=-Math.PI/2+i*2*Math.PI/keys.length,x=cx+Math.cos(a)*maxR,y=cy+Math.sin(a)*maxR;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.strokeStyle='rgba(30,58,95,.14)';ctx.stroke();
+    const lx=cx+Math.cos(a)*(maxR+58),ly=cy+Math.sin(a)*(maxR+42);
+    ctx.fillStyle='#172033';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.font='700 16px -apple-system,sans-serif';ctx.fillText(domains[k].emoji,lx,ly-16);
+    ctx.font='700 15px -apple-system,sans-serif';wrapCanvasText(ctx,domains[k].user,lx,ly+4,88,18);
+  });
+  const pts=keys.map((k,i)=>{const a=-Math.PI/2+i*2*Math.PI/keys.length,r=maxR*(avg[k]/MAX_SCORE);return{x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r}});
+  ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));
+  ctx.closePath();ctx.fillStyle='rgba(22,163,74,.22)';ctx.fill();
+  ctx.strokeStyle='#1e3a5f';ctx.lineWidth=3;ctx.stroke();
+  pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,5,0,Math.PI*2);ctx.fillStyle='#16a34a';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke()});
+  ctx.fillStyle='#667085';ctx.font='15px -apple-system,sans-serif';ctx.fillText('중심 0점 · 바깥 4점',cx,H-12);
+}
+function wrapCanvasText(ctx,text,x,y,maxWidth,lineHeight){
+  const words=text.split(' ');let line='',lines=[];
+  for(const w of words){const test=line?line+' '+w:w;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=w}else line=test}
+  lines.push(line);lines.forEach((ln,i)=>ctx.fillText(ln,x,y+i*lineHeight));
+}
+
+/* ── 우선 영역 ── */
+function priorityHTML(r,k,k2){
+  const d=domains[k],st=stageByScore(r.avg[k]);
+  const stageNames=['씨앗','새싹','나무','열매'];
+  return`<div class="priority">
+    <h3 style="margin-top:0">${d.emoji} ${d.user} <span class="tiny">(영역 ${d.no}. ${d.name})</span></h3>
+    <p>현재는 <span class="pill ${st.cls}">${st.name}</span> (${r.avg[k].toFixed(1)}점 · ${st.range})입니다. 다음 목표는 <b>${st.next}</b>입니다.</p>
+    <div class="timeline">
+      ${stageNames.map((sn,i)=>`<div class="step ${st.idx===i?'active':''}"><b>${sn}</b><br><span class="small">${d.stages[i]}</span></div>`).join('')}
+    </div>
+    <p><b>예상 효과</b><br>${effect(k)}</p>
+    <p class="tiny">두 번째 성장 후보: ${domains[k2].emoji} ${domains[k2].user}</p>
+  </div>`;
+}
+
+/* ════════ 라이선스 안내 ════════
+   외부 라이브러리·글꼴·이미지를 하나도 쓰지 않는 단일 HTML 파일입니다.
+   나중에 오픈소스를 가져다 쓰게 되면 아래 배열에 한 줄만 추가하세요.
+   {name:'라이브러리 이름', version:'1.0.0', license:'MIT', holder:'© 2026 Someone', url:'https://...', text:'라이선스 전문(선택)'}
+   text에 전문을 넣으면 패널에 그대로 펼쳐 보여 줍니다. 전문은 반드시 배포처의 원문을 그대로 붙여 넣으세요. */
+const THIRD_PARTY=[];
+
+function renderThirdParty(){
+  const box=document.getElementById('licThirdParty');
+  if(!box)return;
+  if(!THIRD_PARTY.length){
+    box.innerHTML='<p>이 사이트는 외부 라이브러리나 프레임워크를 쓰지 않습니다. 화면, 계산, 그래프까지 모두 이 파일 안의 코드로만 동작하므로 고지해야 할 제3자 저작권자가 없습니다.</p>';
+    return;
+  }
+  box.innerHTML=THIRD_PARTY.map(t=>`<div class="licTp">
+    <b>${t.name}</b>${t.version?' '+t.version:''} — ${t.license}<br>
+    ${t.holder||''}${t.url?`<br><span class="tiny">${t.url}</span>`:''}
+    ${t.text?`<div class="licPre">${t.text.replace(/</g,'&lt;')}</div>`:''}
+  </div>`).join('');
+}
+
+function openLicense(){
+  renderThirdParty();
+  document.getElementById('licOverlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeLicense(){
+  document.getElementById('licOverlay').classList.remove('show');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLicense()});
+
+/* ── 문항별 준비물 (다음 단계에서 필요한 것) ── */
+const QUESTION_TOOLS={
+ A1:'온라인 게시판 (패들렛 등)',
+ A2:'공동 문서 · 카드뉴스/영상 제작 도구 (캔바 등)',
+ A3:'디지털 지도 (지도 앱·구글 어스 등) · 온라인 설문',
+ A4:'생성형 AI (교사 수업 준비용)',
+ B1:'퀴즈 도구 (띵커벨·구글 설문 퀴즈 등)',
+ B2:'AI 코스웨어 교사용 화면',
+ B3:'학생별 학습 기록과 관찰 메모를 모을 문서',
+ B4:'학급 플랫폼 (구글 클래스룸·클래스팅 등)',
+ C1:'실시간 응답 도구 (멘티미터·띵커벨 등)',
+ C2:'공동 편집 도구 (구글 슬라이드·캔바 등)',
+ C3:'학생이 고를 수 있는 표현 도구 몇 가지',
+ C4:'연령 기준을 확인한 교육용 AI 도구 또는 교사 시연 화면',
+ D1:'온라인 설문 (구글 설문 등)',
+ D2:'학급 플랫폼의 채점기준표 기능',
+ D3:'디지털 포트폴리오 공간 (패들렛·클래스룸 폴더 등)',
+ D4:'과제 댓글·음성 메모 기능',
+ E1:'출처를 적는 간단한 틀',
+ E2:'AI 답을 함께 확인할 교사 시연 화면',
+ E3:'학교의 도구 선정 절차와 개인정보 처리 방침',
+ E4:'학급 온라인 대화 약속문',
+ F1:'공유 드라이브의 공동 수업안 문서',
+ F2:'학교 공유 폴더 또는 자료 공유 플랫폼',
+ F3:'새 도구를 따져 볼 기준 (목표·편의·개인정보)',
+ F4:'수업 기록용 문서 한 장'
+};
+
+/* ── 미션: 응답에서 바로 만들어지는 다음 한 걸음 ── */
+function qByCode(code){return questions.find(q=>q[1]===code)}
+
+function answeredList(r){
+  const list=[];
+  domainKeys.forEach(k=>(r.subs[k]||[]).forEach(pair=>{
+    const q=qByCode(pair[0]);
+    if(q)list.push({code:pair[0],k:k,val:Number(pair[1]),q:q});
+  }));
+  return list;
+}
+
+/* ── 아직 시작 전인 것들 (①을 고른 문항) ── */
+function startListHTML(r){
+  const zeros=answeredList(r).filter(x=>x.val===1);
+  if(!zeros.length){
+    return`<p class="small" style="margin:0">①을 고른 문항이 없습니다. 모든 장면에서 이미 한 번은 해 보셨다는 뜻입니다. 위의 다음 한 걸음부터 이어 가 보세요.</p>`;
+  }
+  const head=`<p class="small muted" style="margin:0 0 10px">아직 해 보지 않은 장면이 ${zeros.length}가지입니다. 전부 할 필요는 없습니다. <b>이 중에서 딱 하나만</b> 골라 이번 달에 해 보세요.</p>`;
+  const items=zeros.map(x=>{
+    const d=domains[x.k];
+    return`<div class="startItem">
+      <div class="startTag">${d.emoji} ${d.user} · ${x.q[4]}</div>
+      <div class="startScene">${x.code}. ${x.q[2]}</div>
+      <div class="startNext"><b>먼저 여기까지만</b> ${OPT_MARKS[1]} ${x.q[3][1]}</div>
+    </div>`}).join('');
+  return head+`<div class="startGrid">${items}</div>`;
+}
+
+/* ── 이번 학기 준비물 ── */
+function toolListHTML(r){
+  const low=answeredList(r).filter(x=>x.val<MAX_SCORE&&QUESTION_TOOLS[x.code]);
+  low.sort((a,b)=>a.val-b.val||a.code.localeCompare(b.code));
+  const seen={},picked=[];
+  low.forEach(x=>{
+    const t=QUESTION_TOOLS[x.code];
+    if(seen[t]||picked.length>=6)return;
+    seen[t]=1;picked.push({tool:t,code:x.code,k:x.k,topic:x.q[4]});
+  });
+  if(!picked.length)return`<p class="small" style="margin:0">지금 새로 챙겨야 할 것이 없습니다. 쓰고 있는 것을 동료와 나눠 보세요.</p>`;
+  return`<p class="small muted" style="margin:0 0 10px">다음 한 걸음을 옮기는 데 필요한 것들입니다. 이름은 예시이며, 학교에서 이미 쓰는 비슷한 도구로 바꿔도 됩니다.</p>
+    <div class="indBox" style="margin:0">
+    ${picked.map(x=>`<div class="indItem"><span class="indCode">${x.code}</span><span><b>${x.tool}</b><br><span class="tiny">${domains[x.k].emoji} ${domains[x.k].user} · ${x.topic}</span></span></div>`).join('')}
+    </div>`;
+}
+
+function buildMissions(r){
+  // ①을 고른 문항은 '아직 시작 전' 카드가 맡고, 여기서는 이미 시작한 문항의 바로 다음 칸을 권합니다.
+  const all=answeredList(r).filter(x=>x.val>=1&&x.val<MAX_SCORE).map(x=>({
+    code:x.code,k:x.k,val:x.val,topic:x.q[4],scene:x.q[2],
+    cur:OPT_MARKS[x.val-1],mark:OPT_MARKS[x.val],next:x.q[3][x.val]
+  }));
+  const byCode=(a,b)=>a.code.localeCompare(b.code);
+  const started=all.filter(x=>x.val>=2).sort((a,b)=>a.val-b.val||byCode(a,b));
+  const notYet=all.filter(x=>x.val===1).sort(byCode);
+  const picked=[],cnt={};
+  started.concat(notYet).forEach(m=>{
+    if(picked.length>=3)return;
+    cnt[m.k]=cnt[m.k]||0;
+    if(cnt[m.k]>=2)return;
+    picked.push(m);cnt[m.k]++;
+  });
+  return picked;
+}
+let currentMissions=[];
+
+function missionState(){return load(STORAGE_MISSION)||{}}
+function saveMission(code,c){
+  const m=missionState();m[code]=c;
+  localStorage.setItem(STORAGE_MISSION,JSON.stringify(m));
+  setStatus('미션 체크 저장됨');checkMissionAllDone();
+}
+function checkMissionAllDone(){
+  const m=missionState();
+  const done=currentMissions.length>0&&currentMissions.every(x=>m[x.code]);
+  document.getElementById('missionAllDone').style.display=done?'block':'none';
+}
+function renderMission(r){
+  currentMissions=buildMissions(r);
+  const m=missionState();
+  const box=document.getElementById('mission');
+  if(!currentMissions.length){
+    box.innerHTML='<p class="small" style="margin:0">모든 문항에서 마지막 단계를 고르셨습니다. 이번에는 동료 한 분과 방법을 나누는 것을 미션으로 삼아 보세요.</p>';
+    document.getElementById('missionAllDone').style.display='none';
+    return;
+  }
+  box.innerHTML=currentMissions.map(x=>{
+    const d=domains[x.k];
+    return`<label class="${m[x.code]?'done':''}">
+      <input type="checkbox" ${m[x.code]?'checked':''} onchange="this.parentElement.classList.toggle('done',this.checked);saveMission('${x.code}',this.checked)">
+      <span><span class="missionTag">${d.emoji} ${d.user} · ${x.topic} <span class="missionStep">지금 ${x.cur} → 다음 ${x.mark}</span></span>${x.next}</span>
+    </label>`}).join('');
+  checkMissionAllDone();
+}
+
+/* ── 해석 ── */
+function whyHTML(r,lowK,topK){
+  return[lowK,topK].map(k=>{
+    const d=domains[k],st=stageByScore(r.avg[k]),w=weakSub(r,k),idx=Number(w[0].slice(1))-1;
+    return`<div class="item open">
+      <button class="accTitle" onclick="this.parentElement.classList.toggle('open')">
+        <span><b>${d.emoji} ${d.user}</b> · ${st.name}</span><span>접기/펼치기</span>
+      </button>
+      <div class="accBody">
+        <p><b>해석</b><br>${d.stages[st.idx]}</p>
+        <p><b>가장 낮게 답한 문항</b><br>${w[0]} · ${(d.ind[idx]||'').replace(/^[A-F]\d\s/,'')} (${w[1]}점)</p>
+        <p><b>다음 행동</b></p>
+        <ul>${actions[k].map(a=>`<li>${a}</li>`).join('')}</ul>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── 상세 해석 (문항별 지금/다음 + 자가진단 + 점검표) ── */
+function detailHTML(r,k){
+  const d=domains[k],st=stageByScore(r.avg[k]);
+  const indDetailHTML=questions.filter(q=>q[0]===k).map(q=>{
+    const rec=(r.subs[k]||[]).find(x=>x[0]===q[1]);
+    const v=rec?Number(rec[1]):0;
+    const mine=v?q[3][v-1]:'응답 없음';
+    const next=v&&v<MAX_SCORE?q[3][v]:'';
+    return`<div style="margin:12px 0">
+      <div style="font-weight:900;font-size:14px;color:var(--navy);margin-bottom:4px">${q[1]} ${q[4]} <span class="tiny">(${v||'-'}점 · ${q[2]})</span></div>
+      <ul class="indResultList">
+        <li><b>지금</b> ${OPT_MARKS[v-1]||''} ${mine}</li>
+        ${next?`<li><b>다음 한 걸음</b> ${OPT_MARKS[v]} ${next}</li>`:'<li><b>다음 한 걸음</b> 이 문항은 이미 마지막 단계입니다. 동료와 방법을 나눠 보세요.</li>'}
+      </ul>
+    </div>`;
+  }).join('');
+
+  // ★④ G2형 자가진단 질문
+  const sc=selfCheckQuestions[k];
+  const selfCheckHTML=sc?`
+    <div style="margin-top:14px">
+      <p style="font-size:13px;font-weight:900;color:var(--muted);margin:0 0 6px">🔎 자가진단 질문</p>
+      <div class="selfCheckItem">
+        <span class="selfCheckCode">${k}</span>
+        <span class="selfCheckQ">${sc.q}</span>
+      </div>
+    </div>`:'';
+
+  // 디지털 기초소양 점검표 (E영역에만)
+  const ethicsHTML=k==='E'?`
+    <div class="ethicsChecklist" style="margin-top:14px">
+      <div class="ecTitle">🛡️ 수업 전 점검표</div>
+      ${ethicsItems.map((item,i)=>`
+        <div class="ethicsItem">
+          <input type="checkbox" id="ec_${i}" onchange="saveEthicsCheck(${i},this.checked)" ${loadEthicsCheck(i)?'checked':''}>
+          <label for="ec_${i}" style="cursor:pointer;font-size:14px">${item}</label>
+        </div>`).join('')}
+    </div>`:'';
+
+  return`<div class="item">
+    <button class="accTitle" onclick="this.parentElement.classList.toggle('open')">
+      <span><b>${d.emoji} 영역 ${d.no}. ${d.user}</b> · ${r.avg[k].toFixed(1)}점 · <span class="pill ${st.cls}" style="margin:0">${st.name}</span></span><span>자세히</span>
+    </button>
+    <div class="accBody">
+      <p><b>이 영역은</b><br>${d.desc}</p>
+      <p><b>현재 해석</b> (${st.range})<br>${d.stages[st.idx]}</p>
+      <div class="stageBadgeRow">${STAGE_BADGES}</div>
+      <p style="margin-top:14px"><b>문항별 지금과 다음 한 걸음</b></p>
+      ${indDetailHTML}
+      ${selfCheckHTML}
+      ${ethicsHTML}
+    </div>
+  </div>`;
+}
+
+/* ── ⑦ 윤리 체크리스트 저장/로드 ── */
+const STORAGE_ETHICS='class_growth_map_check_v1';
+function saveEthicsCheck(i,checked){
+  const m=load(STORAGE_ETHICS)||{};m[i]=checked;
+  localStorage.setItem(STORAGE_ETHICS,JSON.stringify(m));
+}
+function loadEthicsCheck(i){
+  const m=load(STORAGE_ETHICS)||{};return!!m[i];
+}
+
+/* ── 초기화 ── */
+function resetForm(){
+  const input=prompt('정말 초기화하려면 아래에 "초기화"라고 입력하세요.');
+  if(input!=='초기화')return;
+  document.getElementById('survey').reset();
+  // 진행 + 결과 + 미션 모두 삭제
+  localStorage.removeItem(STORAGE_PROGRESS);
+  localStorage.removeItem(STORAGE_RESULT);
+  localStorage.removeItem(STORAGE_MISSION);
+  currentStep=0;renderSurvey();updateProgress(false);
+  document.getElementById('result').style.display='none';
+  // 히어로 배너 숨기기
+  const box=document.getElementById('heroResumeBox');
+  if(box)box.style.display='none';
+  setStatus('초기화됨');
+}
+/* ── PDF 저장 ── */
+function savePDF(){
+  const toast=document.getElementById('pdfToast');
+  toast.style.display='block';
+  // 안내를 읽을 시간을 준 뒤 인쇄 창 실행
+  setTimeout(()=>{
+    window.print();
+    // 인쇄 창 닫히면 토스트 숨기기
+    setTimeout(()=>{toast.style.display='none'},2000);
+  },800);
+}
+
+function clearResultOnly(){
+  if(confirm('저장된 최근 결과를 삭제할까요?')){
+    localStorage.removeItem(STORAGE_RESULT);
+    const box=document.getElementById('heroResumeBox');
+    // 진행중인 응답도 없으면 배너 완전히 숨기기
+    const p=load(STORAGE_PROGRESS);
+    if(!p||!Object.keys(p.answers||{}).length){
+      if(box)box.style.display='none';
+    }
+    setStatus('최근 결과 삭제됨');
+  }
+}
+
+/* ════ 초기 실행 ════ */
+window.addEventListener('beforeunload',e=>{
+  saveProgress(false);
+  const done=Object.keys(getAnswers()).length;
+  if(done>0&&done<questions.length){e.preventDefault();e.returnValue=''}
+});
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+renderIntro();
+showHeroResume();
+const savedProgress=load(STORAGE_PROGRESS);
+if(savedProgress&&savedProgress.answers){
+  if(savedProgress.step!==undefined)currentStep=savedProgress.step;
+  renderSurvey();applyAnswers(savedProgress.answers);
+  checkDomainComplete();
+  setStatus('이전 응답 불러옴');
+} else {
+  renderSurvey();
+}
+window.addEventListener('load',()=>window.scrollTo(0,0));
+</script>
+</body>
+</html>
