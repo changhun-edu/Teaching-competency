@@ -7,7 +7,7 @@
 <style>
 :root{
   --navy:#1e3a5f;--navy2:#0f2541;--green:#16a34a;--orange:#ea580c;--blue:#2563eb;
-  --bg:#f8fafc;--card:#ffffff;--ink:#172033;--muted:#667085;--line:#d9e2ef;
+  --bg:#f8fafc;--card:#ffffff;--ink:#172033;--muted:#586074;--line:#d9e2ef;
   --soft:#eef6ff;--ok:#ecfdf3;--warn:#fff7ed;--shadow:0 18px 45px rgba(15,37,65,.10);
 }
 *{box-sizing:border-box} html{scroll-behavior:smooth}
@@ -29,7 +29,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans
 .chip{background:#f2f7ff;border:1px solid #d8e6ff;border-radius:15px;padding:12px;font-weight:900;color:#24427d}
 /* ★ 만든이: 푸터로 이동, 최소화 */
 .sourceNote{margin:10px 0 0;padding:10px 14px;border-left:3px solid var(--line,#d6dce5);background:rgba(127,127,127,.06);border-radius:0 10px 10px 0;font-size:13.5px;line-height:1.6;color:var(--muted)}
-.siteFooter{text-align:center;padding:18px 0 28px;font-size:12px;color:var(--muted);opacity:.5;letter-spacing:-.01em}
+.siteFooter{text-align:center;padding:18px 0 28px;font-size:13px;color:var(--muted);letter-spacing:-.01em}
 
 /* ── 히어로 이어하기 배너 ── */
 .heroResume{margin-top:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:18px;padding:14px 18px;display:none}
@@ -74,7 +74,7 @@ ul{margin:8px 0 0 18px;padding:0}li{margin:5px 0}
 .needCard .needEmoji{font-size:22px;flex-shrink:0}
 .needCard .needText{flex:1}
 .needCard .needText b{display:block;font-size:15px;color:var(--ink)}
-.needCard .needTag{display:inline-flex;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:900;color:#fff;margin-top:4px}
+.needCard .needTag{display:inline-flex;border-radius:999px;padding:4px 10px;font-size:12.5px;font-weight:900;color:#fff;margin-top:4px}
 
 /* ── 변하는것/변하지않는것 ── */
 .changeGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
@@ -108,7 +108,7 @@ ul{margin:8px 0 0 18px;padding:0}li{margin:5px 0}
 .competencyGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .compCard{border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#fff,#f8fbff);padding:14px;text-align:center}
 .compCard .emoji{font-size:24px}.compCard b{display:block;font-size:15px;margin-top:5px;word-break:keep-all}
-.compCard span{font-size:12px;color:var(--muted)}
+.compCard span{font-size:12.5px;color:var(--muted)}
 
 /* ── 단계별 진단 ── */
 .stepNav{display:flex;align-items:center;justify-content:space-between;margin:18px 0 0;gap:12px;padding-bottom:20px;border-bottom:1px solid var(--line)}
@@ -125,14 +125,15 @@ ul{margin:8px 0 0 18px;padding:0}li{margin:5px 0}
 .domainCoreValue{font-size:13px;color:var(--muted);margin-top:2px}
 .domainDesc{font-size:15px;color:var(--muted);line-height:1.6;margin-top:8px;padding-top:10px;border-top:1px solid var(--line)}
 .tag{min-width:42px;border-radius:14px;padding:7px 10px;color:#fff;font-weight:900;text-align:center;font-size:15px;flex-shrink:0}
-.A{background:#2563eb}.B{background:#7c3aed}.C{background:#f59e0b}.D{background:#fb923c}
-.E{background:#ea580c}.F{background:#ca8a04}.G{background:#16a34a}
+.compCard .tag,.domainBadge .tag{color:#fff}
+.A{background:#1d4ed8}.B{background:#6d28d9}.C{background:#b45309}.D{background:#c2410c}
+.E{background:#9a3412}.F{background:#854d0e}.G{background:#15803d}
 
 /* ── 하단 네비게이션 ── */
 .bottomNav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px;padding-top:20px;border-top:2px solid var(--line)}
 .bottomNavNext{flex:1;max-width:420px;margin-left:auto}
 .bottomNavNext button{width:100%;justify-content:center;border-radius:18px;padding:16px 20px;font-size:17px;transition:background .2s,box-shadow .2s}
-.bottomNavNext button.allDone{background:var(--green);box-shadow:0 6px 20px rgba(22,163,74,.35)}
+.bottomNavNext button.allDone{background:#15803d;box-shadow:0 6px 20px rgba(21,128,61,.35)}
 .bottomNavNext button.allDone:hover{opacity:.93}
 /* 완료 토스트 */
 .completionToast{display:none;align-items:center;gap:10px;background:#ecfdf3;border:1px solid #86efac;border-radius:16px;padding:12px 16px;margin-top:14px;animation:fadeSlide .3s ease}
@@ -217,7 +218,7 @@ ul{margin:8px 0 0 18px;padding:0}li{margin:5px 0}
 .distItem{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13.5px;color:#334155}
 .distItem b{color:var(--navy);font-size:14.5px}
 .mission label.done .missionTag{color:var(--muted)}
-.missionStep{font-weight:800;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:999px;padding:2px 8px;margin-left:4px;font-size:11.5px;white-space:nowrap}
+.missionStep{font-weight:800;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:999px;padding:2px 8px;margin-left:4px;font-size:12px;white-space:nowrap}
 .mission label.done .missionStep{color:var(--muted);background:#f1f5f9;border-color:var(--line)}
 .accordion .item{border:1px solid var(--line);border-radius:17px;margin:10px 0;overflow:hidden;background:#fff}
 .accTitle{width:100%;background:#fff;color:var(--ink);border-radius:0;justify-content:space-between;padding:15px 16px}
@@ -298,6 +299,7 @@ ul{margin:8px 0 0 18px;padding:0}li{margin:5px 0}
 .visionInput{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 16px;margin:12px 0;flex-wrap:wrap}
 .visionInput .vi-pre{font-size:15px;color:var(--ink);white-space:nowrap}
 .visionInput input{flex:1;min-width:160px;border:0;outline:none;font-size:15px;font-family:inherit;color:var(--navy);font-weight:700;background:transparent}
+.visionInput input::placeholder{color:#6b7280;font-weight:600}
 .visionInput .vi-suf{font-size:15px;color:var(--ink);white-space:nowrap}
 .visionSaved{display:none;background:#ecfdf3;border:1px solid #86efac;border-radius:12px;padding:10px 14px;font-size:14px;color:#166534;margin-top:8px}
 .visionSaved.show{display:block}
@@ -332,6 +334,7 @@ ul{margin:8px 0 0 18px;padding:0}li{margin:5px 0}
   .scale label{padding:11px 12px;font-size:14.5px;border-radius:12px}
   .scaleLabels{font-size:12px}
   .needsGrid,.startGrid{grid-template-columns:1fr}
+  .overallScore{display:block;border-radius:16px;padding:10px 14px;line-height:1.7}
 }
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
@@ -783,9 +786,9 @@ const domains={
 };
 
 const coreValues=[
- {num:1,title:'수업을 짜는 힘',keys:['A','B'],color:'#7c3aed',desc:'무엇을 배우게 할 것인지 정하고, 학생마다 다른 길을 마련하는 영역입니다.'},
- {num:2,title:'수업을 여는 힘',keys:['C','D'],color:'#2563eb',desc:'교실에서 학생이 실제로 움직이게 하고, 그 과정을 보아 되돌려 주는 영역입니다.'},
- {num:3,title:'수업을 넓히는 힘',keys:['E','F'],color:'#16a34a',desc:'학생의 디지털 소양을 기르고, 동료와 함께 수업을 키워 가는 영역입니다.'}
+ {num:1,title:'수업을 짜는 힘',keys:['A','B'],color:'#6d28d9',desc:'무엇을 배우게 할 것인지 정하고, 학생마다 다른 길을 마련하는 영역입니다.'},
+ {num:2,title:'수업을 여는 힘',keys:['C','D'],color:'#1d4ed8',desc:'교실에서 학생이 실제로 움직이게 하고, 그 과정을 보아 되돌려 주는 영역입니다.'},
+ {num:3,title:'수업을 넓히는 힘',keys:['E','F'],color:'#15803d',desc:'학생의 디지털 소양을 기르고, 동료와 함께 수업을 키워 가는 영역입니다.'}
 ];
 
 const needs=[
@@ -1021,7 +1024,7 @@ function renderIntro(){
     </div>`).join('');
 }
 
-function getCvColor(n){return['','#7c3aed','#2563eb','#16a34a'][n]}
+function getCvColor(n){return['','#6d28d9','#1d4ed8','#15803d'][n]}
 
 /* ════ 렌더링: 진단 ════ */
 function renderSurvey(){
