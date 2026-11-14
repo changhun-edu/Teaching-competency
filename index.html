@@ -366,6 +366,9 @@ ul{margin:8px 0 0 18px;padding:0}li{margin:5px 0}
   .resultAccBtn .arrow{display:none}
   .item,.priority,.mini,.resultSummaryCard,.missionHighlight,.startItem{break-inside:avoid}
 }
+/* 학교 연장통 바로가기로 찾아온 자리 표시 */
+.qfind{animation:qfind 1.2s 3;border-radius:12px;scroll-margin-top:80px}
+@keyframes qfind{0%,40%{box-shadow:0 0 0 4px rgba(37,99,235,.4)}100%{box-shadow:0 0 0 0 rgba(37,99,235,0)}}
 </style>
 </head>
 <body>
@@ -1804,6 +1807,39 @@ if(savedProgress&&savedProgress.answers){
   renderSurvey();
 }
 window.addEventListener('load',()=>window.scrollTo(0,0));
+
+/* 학교 연장통 바로가기(?q=낱말): 소개·진단 문항 가운데 그 말이 처음 나오는 자리로 가서 표시합니다.
+   진단 문항이면 그 영역 단계로 넘겨 보여 줍니다(응답은 그대로). 주소의 ?q= 는 바로 지웁니다. */
+(function(){
+  let q='';
+  try{ q=(new URLSearchParams(location.search).get('q')||'').trim(); }catch(e){}
+  if(!q) return;
+  try{ history.replaceState(history.state,'',location.pathname+location.hash); }catch(e){}
+  const norm=t=>String(t).toLowerCase().replace(/\s+/g,'');
+  const words=q.split(/\s+/).filter(w=>w.length>=2).sort((a,b)=>b.length-a.length);
+  const tries=[norm(q),...words.map(norm)].filter((w,i,a)=>w&&a.indexOf(w)===i);
+  function find(){
+    const roots=[document.getElementById('intro'),document.getElementById('diagnosisSection')];
+    for(const qn of tries) for(const root of roots){
+      if(!root||!norm(root.textContent).includes(qn)) continue;
+      let hit=null; const walk=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT);
+      for(let n;(n=walk.nextNode());) if(!/^(SCRIPT|STYLE|BUTTON|INPUT|SELECT|OPTION)$/.test(n.tagName)&&norm(n.textContent).includes(qn)&&(!hit||hit.contains(n))) hit=n;
+      if(!hit) continue;
+      const step=hit.closest('.domainStep');
+      if(step&&!step.classList.contains('active')){
+        const si=+step.id.replace('step_','');
+        const curEl=document.getElementById('step_'+currentStep); if(curEl) curEl.classList.remove('active');
+        currentStep=si; step.classList.add('active'); renderStepDots(); updateStepNav();
+      }
+      for(let d=hit.closest('details');d;d=d.parentElement&&d.parentElement.closest('details')) d.open=true;
+      const t=hit.closest('.q, .indItem, .domainHeader, .coreQ, li, p, div')||hit;
+      if(!t.getClientRects().length) continue;
+      t.scrollIntoView({block:'center'}); t.classList.add('qfind'); setTimeout(()=>t.classList.remove('qfind'),4000);
+      return;
+    }
+  }
+  if(document.readyState==='complete') setTimeout(find,80); else window.addEventListener('load',()=>setTimeout(find,80));
+})();
 </script>
 </body>
 </html>
